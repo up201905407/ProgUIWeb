@@ -1,1 +1,68 @@
-<p>article-list works!</p>
+<h1>Newspaper</h1>
+<div class="container mt-5">
+  <div class="btn-group" role="group">
+    <button
+      type="button"
+      class="btn"
+      [ngClass]="{ active: selectedCategory === 'Category1' }"
+      (click)="selectCategory('Category1')"
+    >
+      Category 1
+    </button>
+    <button
+      type="button"
+      class="btn"
+      [ngClass]="{ active: selectedCategory === 'Category2' }"
+      (click)="selectCategory('Category2')"
+    >
+      Category 2
+    </button>
+    <button
+      type="button"
+      class="btn"
+      [ngClass]="{ active: selectedCategory === 'Category3' }"
+      (click)="selectCategory('Category3')"
+    >
+      Category 3
+    </button>
+    <button
+      type="button"
+      class="btn"
+      [ngClass]="{ active: selectedCategory === 'Category4' }"
+      (click)="selectCategory('Category4')"
+    >
+      Category 4
+    </button>
+    <button
+      type="button"
+      class="btn"
+      [ngClass]="{ active: selectedCategory === 'Category5' }"
+      (click)="selectCategory('Category5')"
+    >
+      Category 5
+    </button>
+  </div>
+</div>
+
+<input placeholder="Search" />
+<div *ngIf="isLoading; else content">
+  <app-loading-spinner />
+</div>
+<ng-template #content>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Subtitle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let article of articleList">
+        <td>{{ article.id }}</td>
+        <td>{{ article.title }}</td>
+        <td>{{ article.subtitle }}</td>
+      </tr>
+    </tbody>
+  </table>
+</ng-template>
