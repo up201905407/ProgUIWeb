@@ -3,28 +3,27 @@ import { Article } from '../interfaces/article';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { LoginService } from './login.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NewsService {
+  private newsUrl = 'http://sanger.dia.fi.upm.es/pui-rest-news/articles'; // URL to web api
+  private articleUrl = 'http://sanger.dia.fi.upm.es/pui-rest-news/article'; // URL to web api
 
-  private newsUrl = 'http://sanger.dia.fi.upm.es/pui-rest-news/articles';  // URL to web api
-  private articleUrl = 'http://sanger.dia.fi.upm.es/pui-rest-news/article';  // URL to web api
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   // Set the corresponding APIKEY accordig to the received by email
-  private APIKEY: string;
+  private APIKEY: string | undefined;
   private APIKEY_ANON = 'xxxxxx';
 
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: 'PUIRESTAUTH apikey=' + this.APIKEY_ANON
-    })
+      Authorization: 'PUIRESTAUTH apikey=' + this.APIKEY_ANON,
+    }),
   };
 
   // Modifies the APIKEY with the received value
@@ -33,8 +32,8 @@ export class NewsService {
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: 'PUIRESTAUTH apikey=' + this.APIKEY
-      })
+        Authorization: 'PUIRESTAUTH apikey=' + this.APIKEY,
+      }),
     };
     console.log('Apikey successfully changed ' + this.APIKEY);
   }
@@ -64,7 +63,6 @@ export class NewsService {
     return this.http.delete<Article>(url, this.httpOptions);
   }
 
-
   // Returns an article which contains the following elements:
   // {"id":...,
   //  "id_user":...,
@@ -76,12 +74,10 @@ export class NewsService {
   //  "image_data":...,
   //  "image_media_type":...}
 
-
   getArticle(id: number): Observable<Article> {
     console.log('Requesting article id=' + id);
     const url = `${this.articleUrl}/${id}`;
     return this.http.get<Article>(url, this.httpOptions);
-
   }
 
   updateArticle(article: Article): Observable<Article> {

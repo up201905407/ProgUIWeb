@@ -11,6 +11,7 @@ import { ArticleListComponent } from './article-list/article-list.component';
 import { LoginComponent } from './login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HighlightDirective } from './directives/highlight.directive';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -19,15 +20,17 @@ import { HighlightDirective } from './directives/highlight.directive';
     ArticleEditionComponent,
     ArticleListComponent,
     LoginComponent,
-    HighlightDirective
+    HighlightDirective,
+    LoadingSpinnerComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
