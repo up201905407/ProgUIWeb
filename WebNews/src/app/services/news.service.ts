@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Article } from './article';
+import { Article } from '../interfaces/article';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 

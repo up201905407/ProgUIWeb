@@ -1,1 +1,65 @@
-<p>article-edition works!</p>
+
+<h1>Create news article</h1>
+<form #articleForm="ngForm" (ngSubmit)="save()">
+    <div class="form-group">
+        <label> Title: </label>
+        <input class="form-control" type="text" required [(ngModel)]="article.title" name="title" #stitle="ngModel"
+        [ngClass]="stitle.valid || stitle['pristine'] ? '': 'bg-danger'" 
+        minlength="5" maxlength="20" appHighlight>
+            <div class="alert alert-danger" *ngIf="stitle.touched && !stitle.valid">
+                <div *ngIf="stitle.errors">Title needs to be between 5 and 20 characters long</div>
+            </div>
+        </div>
+    <div class="form-group">
+        <label> Subtitle: </label>
+        <input class="form-control" type="text" required [(ngModel)]="article.subtitle " 
+            name="ssubtitle " #ssubtitle ="ngModel"
+            [ngClass]="ssubtitle.valid || ssubtitle ['pristine'] ? '': 'bg-danger'"
+            minlength="5" maxlength="50" appHighlight>
+            <div class="alert alert-danger" *ngIf="ssubtitle.touched && !ssubtitle.valid">
+                <div *ngIf="ssubtitle.errors">Subtitle needs to be between 5 and 50 characters long</div>
+            </div>
+
+            <div class="form-group">
+                <label> Category: </label>
+                <select class="form-control" required [(ngModel)]="article.category" name="category" #category="ngModel" appHighlight>
+                    <option value="National">National</option>
+                    <option value="Economy">Economy</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Technology">Technology</option>
+                </select>
+            </div>
+            
+
+    </div>
+    <div class="form-group">
+        <label> Abstract: </label>
+        <input class="form-control" type="text" required [(ngModel)]="article.abstract" name="sabstract" #sabstract="ngModel"
+            [ngClass]="sabstract.valid || sabstract.pristine ? '': 'bg-danger'"
+            minlength="5" maxlength="200"  appHighlight>
+        <div class="alert alert-danger" *ngIf="sabstract.touched && !sabstract.valid">
+            <div *ngIf="sabstract.errors">Abstract needs to be between 10 and 200 characters long</div>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="body">Body:</label>
+        <textarea class="form-control" rows="6" [(ngModel)]="article.body" name="body" #sbody="ngModel"></textarea>
+    </div>
+
+</form>
+
+<h3 class="display-6">Current Article Viewer: </h3>
+<p>
+    Title: {{ article.title  }} <br>
+    Subtitle: {{ article.subtitle }} <br> 
+    Category: {{ article.category  }} <br>
+    Abstract: {{ article.abstract  }} <br>
+    Body: {{ article.body }} <br> 
+</p>
+
+
+<button (click)="save()" class="btn btn-primary btn-sm mr-1" [disabled]="!articleForm.valid">Send</button>
+<button (click)="clean()" class="btn btn-primary btn-sm">Clean</button>
+  
+

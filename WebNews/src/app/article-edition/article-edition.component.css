@@ -1,0 +1,10 @@
+.ng-valid[required], .ng-valid.required  {
+    border-left: 10px solid green; /* green */
+  }
+  
+  .ng-invalid:not(form), .ng-invalid.required  {
+    border-left: 10px solid yellow; /* yellow */
+  }
+  .bg-focused {
+    background-color: rgb(170, 169, 169);
+  }
