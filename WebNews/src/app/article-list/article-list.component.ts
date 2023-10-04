@@ -11,6 +11,7 @@ export class ArticleListComponent implements OnInit {
   articleList!: Article[];
   isLoading = true;
   selectedCategory: string = '';
+  filterText: string = '';
 
   constructor(private newsService: NewsService) {}
 

@@ -1,4 +1,4 @@
-<h1>Newspaper</h1>
+<h1>EIT-Newspaper</h1>
 <div class="container mt-5">
   <div class="btn-group" role="group">
     <button
@@ -44,12 +44,12 @@
   </div>
 </div>
 
-<input placeholder="Search" />
+<input type="text" id="filterText" [(ngModel)]="filterText" placeholder="Search Here">
 <div *ngIf="isLoading; else content">
   <app-loading-spinner />
 </div>
 <ng-template #content>
-  <table class="table">
+  <table class="table" *ngIf="articleList.length > 0; else emptyList">
     <thead>
       <tr>
         <th>ID</th>
@@ -58,11 +58,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let article of articleList">
+      <tr *ngFor="let article of articleList | filterArticles: filterText">
         <td>{{ article.id }}</td>
         <td>{{ article.title }}</td>
         <td>{{ article.subtitle }}</td>
       </tr>
     </tbody>
   </table>
+  <ng-template #emptyList>No articles for the current filters.</ng-template>
 </ng-template>
