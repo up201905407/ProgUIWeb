@@ -4,42 +4,42 @@
     <button
       type="button"
       class="btn"
-      [ngClass]="{ active: selectedCategory === 'Category1' }"
-      (click)="selectCategory('Category1')"
+      [ngClass]="{ active: selectedCategory === 'All' }"
+      (click)="selectCategory('All')"
     >
-      Category 1
+      All
     </button>
     <button
       type="button"
       class="btn"
-      [ngClass]="{ active: selectedCategory === 'Category2' }"
-      (click)="selectCategory('Category2')"
+      [ngClass]="{ active: selectedCategory === 'National' }"
+      (click)="selectCategory('National')"
     >
-      Category 2
+      National
     </button>
     <button
       type="button"
       class="btn"
-      [ngClass]="{ active: selectedCategory === 'Category3' }"
-      (click)="selectCategory('Category3')"
+      [ngClass]="{ active: selectedCategory === 'Economy' }"
+      (click)="selectCategory('Economy')"
     >
-      Category 3
+      Economy
     </button>
     <button
       type="button"
       class="btn"
-      [ngClass]="{ active: selectedCategory === 'Category4' }"
-      (click)="selectCategory('Category4')"
+      [ngClass]="{ active: selectedCategory === 'Sports' }"
+      (click)="selectCategory('Sports')"
     >
-      Category 4
+      Sports
     </button>
     <button
       type="button"
       class="btn"
-      [ngClass]="{ active: selectedCategory === 'Category5' }"
-      (click)="selectCategory('Category5')"
+      [ngClass]="{ active: selectedCategory === 'Technology' }"
+      (click)="selectCategory('Technology')"
     >
-      Category 5
+      Technology
     </button>
   </div>
 </div>
@@ -58,10 +58,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let article of articleList | filterArticles: filterText">
+      <tr *ngFor="let article of articleList | filterArticles: filterText: selectedCategory">
         <td>{{ article.id }}</td>
         <td>{{ article.title }}</td>
-        <td>{{ article.subtitle }}</td>
+        <td>{{ article.category }}</td>
       </tr>
     </tbody>
   </table>

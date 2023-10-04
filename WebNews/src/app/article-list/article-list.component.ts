@@ -10,7 +10,7 @@ import { Article } from '../interfaces/article';
 export class ArticleListComponent implements OnInit {
   articleList!: Article[];
   isLoading = true;
-  selectedCategory: string = '';
+  selectedCategory: string = 'All';
   filterText: string = '';
 
   constructor(private newsService: NewsService) {}

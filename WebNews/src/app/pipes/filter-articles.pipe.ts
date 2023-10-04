@@ -6,15 +6,17 @@ import { Article } from '../interfaces/article';
 })
 export class FilterArticlesPipe implements PipeTransform {
 
-  transform(articles: Article[], filterText: string): Article[] {
-    return articles.filter((article) => {
-      if (filterText === '') {
-        return true;
-      }
+  transform(articles: Article[], filterText: string, selectedCategory: string): Article[] {
+      return articles.filter(article => {
+        const textMatch = !filterText ||
+          article.title.toLowerCase().includes(filterText.toLowerCase()) ||
+          (article.subtitle && article.subtitle.toLowerCase().includes(filterText.toLowerCase())) ||
+          (article.abstract && article.abstract.toLowerCase().includes(filterText.toLowerCase()));
 
-      return article.title.toLowerCase().includes(filterText) || article.subtitle.toLowerCase().includes(filterText) || article.abstract.toLowerCase().includes(filterText);
+        const categoryMatch = selectedCategory === 'All' || article.category === selectedCategory;
+  
+        return textMatch && categoryMatch;
+      });
     }
-    );
-  }
 
 }
