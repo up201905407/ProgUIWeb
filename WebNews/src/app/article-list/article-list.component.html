@@ -52,16 +52,20 @@
   <table class="table" *ngIf="articleList.length > 0; else emptyList">
     <thead>
       <tr>
-        <th>ID</th>
         <th>Title</th>
         <th>Subtitle</th>
+        <th>Category</th>
+        <th>Abstract</th>
+        <th>Thumbnail</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let article of articleList | filterArticles: filterText: selectedCategory">
-        <td>{{ article.id }}</td>
-        <td>{{ article.title }}</td>
+        <td><a [routerLink]="['/article', article.id]">{{ article.title }}</a></td>
+        <td>{{ article.subtitle }}</td>
         <td>{{ article.category }}</td>
+        <td>{{ article.abstract }}</td>
+        <td><a [routerLink]="['/article', article.id]"><img [src]="'data:' + article.image_media_type + ';base64,' + article.image_data "></a></td>
       </tr>
     </tbody>
   </table>
