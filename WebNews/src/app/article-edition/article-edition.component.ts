@@ -5,11 +5,9 @@ import * as _ from 'lodash';
 import { NewsService } from '../services/news.service';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Alert } from '../interfaces/alert';
 
-interface Alert {
-	type: string;
-	message: string;
-}
+
 
 
 @Component({
@@ -20,7 +18,6 @@ interface Alert {
 
 export class ArticleEditionComponent{
   alerts!: Alert[];
-  
   articleList!: Article[];
   article!: Article
   imageError!: string|null;
@@ -29,6 +26,7 @@ export class ArticleEditionComponent{
   idList: number[]=[];
   paramId!: string | null;
   idGiven: boolean=false;
+  isLoading = true;
   public Editor = ClassicEditor;
 
   @ViewChild('articleForm') articleForm!: NgForm;  
@@ -58,16 +56,20 @@ export class ArticleEditionComponent{
     })
     
     
-    if(this.paramId!=null){
-      this.idGiven=true;
-      // wait for api key
+    // Check for a numeric paramId
+    if (this.paramId != null && !isNaN(+this.paramId)) {
+      this.idGiven = true;
       this.newsService.getArticle(Number(this.paramId)).subscribe(
         (article) => {
-        this.article = article;
-      },
-      (error)=>{
-        console.log("error: "+error)
-      });
+          this.article = article;
+          this.isLoading = false // Set loading to false when API request is resolved
+        },
+        (error) => {
+          this.showError('Please provide a valid article id');
+        });
+    }
+    else {
+      this.showError('Please provide a numeric id');
     }
     
   }
@@ -92,10 +94,10 @@ export class ArticleEditionComponent{
       message: 'Successfully created article',
     })
   }
-  showError(){
+  showError(errorMessage:string){
     this.alerts.push({
       type: 'danger',
-      message: 'There was an error trying to create the article',
+      message: errorMessage,
     })
   }
 
@@ -154,7 +156,7 @@ export class ArticleEditionComponent{
           this.showSuccess();
         },
         (error)=>{
-          this.showError();
+          this.showError("Could not update Article");
         });
     }
     // New article
@@ -168,7 +170,7 @@ export class ArticleEditionComponent{
           this.showSuccess();
         },
         (error)=>{
-          this.showError();
+          this.showError("Could not create Article");
         });
       
     }

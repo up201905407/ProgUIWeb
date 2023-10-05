@@ -1,0 +1,67 @@
+.title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    text-decoration: underline;
+}
+
+
+.subtitle {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #555;
+}
+
+
+.category {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #888;
+    font-style: italic;
+}
+
+.image {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+.abstract {
+    text-align: center;
+    font-size: 18px;
+    font-weight: normal;
+    color: #777;
+    font-style: italic;
+}
+
+/* Footer */
+.text-muted {
+    text-align: center;
+    color: #999;
+    /* Set the color for additional information */
+}
+
+/* Spacing */
+.title,
+.subtitle,
+.category,
+.abstract {
+    margin: 10px 0;
+    /* Add margin to separate content sections */
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* This will make it cover the entire viewport height */
+}
+
+.jumbotron {
+    background-color: #f0f0f0;
+    padding: 20px;
+}
