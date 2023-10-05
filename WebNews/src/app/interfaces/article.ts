@@ -6,7 +6,8 @@ export interface Article{
     update_date:string,
     category:string,
     title:string,
-    image_data:File|null,
+    image_data:string,
     image_media_type:string,
-    body:string
+    body:string,
+    username:string,
 }

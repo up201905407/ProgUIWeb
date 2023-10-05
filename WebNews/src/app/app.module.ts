@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HighlightDirective } from './directives/highlight.directive';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
     NgbModule,
     FormsModule,
     HttpClientModule,
+    CKEditorModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
