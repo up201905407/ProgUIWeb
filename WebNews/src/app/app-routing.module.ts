@@ -5,7 +5,6 @@ import { ArticleEditionComponent} from './article-edition/article-edition.compon
 import { ArticleListComponent} from './article-list/article-list.component';
 import { LoginComponent} from './login/login.component';
 
-
 const routes: Routes = [
   {path: 'article-edition', component: ArticleEditionComponent},
   {path: 'article-details', component: ArticleDetailsComponent},

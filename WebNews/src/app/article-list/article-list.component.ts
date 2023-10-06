@@ -23,6 +23,7 @@ export class ArticleListComponent implements OnInit {
     this.newsService.getArticles().subscribe((list) => {
       this.articleList = list;
       this.isLoading = false; // Set loading to false when API request is resolved
+      console.log(list);
     });
   }
 
