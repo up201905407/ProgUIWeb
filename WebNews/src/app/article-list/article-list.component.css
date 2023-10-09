@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center the input horizontally */
+  align-items: center; /* Vertically center the content */
+  margin-top: 20px;
+}
+
+input {
+  width: 300px; /* Set a specific width to the input field */
+  height: 30px;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center; /* Center the input horizontally */
+  align-items: center; /* Vertically center the content */
+  margin-top: 20px;
+}

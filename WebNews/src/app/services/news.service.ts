@@ -17,7 +17,7 @@ export class NewsService {
 
   // Set the corresponding APIKEY accordig to the received by email
   private APIKEY: string | undefined;
-  private APIKEY_ANON = 'xxxxxx';
+  private APIKEY_ANON = 'ANON06_340';
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -41,7 +41,6 @@ export class NewsService {
   setAnonymousApiKey() {
     this.setUserApiKey(this.APIKEY_ANON);
   }
-
 
   // Returns the list of news contain elements with the following fields:
   // {"id":...,

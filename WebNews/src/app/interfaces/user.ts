@@ -1,6 +1,10 @@
 export interface User {
-  familyname: String;
-  surname: String;
-  email: String;
-  password: String;
+  familyname: string;
+  surname: string;
+  email: string;
+  password: string;
+  apikey: string;
+  group: string;
+  user: string;
+  username: string;
 }
