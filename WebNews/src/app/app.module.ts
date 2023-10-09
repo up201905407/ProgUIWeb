@@ -13,6 +13,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HighlightDirective } from './directives/highlight.directive';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { FilterArticlesPipe } from './pipes/filter-articles.pipe';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { FilterArticlesPipe } from './pipes/filter-articles.pipe';
     NgbModule,
     FormsModule,
     HttpClientModule,
+    CKEditorModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
