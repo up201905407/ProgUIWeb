@@ -1,6 +1,6 @@
 <!-- Login Form -->
 <form action="">
-  <div *ngIf="isLogged; else guest">
+  <div [(ngModel)]="isLogged" *ngIf="isLogged; else guest">
     Hello {{ this.user?.username }}
     <button type="button" class="btn btn-primary" (click)="logout()">
       Logout
