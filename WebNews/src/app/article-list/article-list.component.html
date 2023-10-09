@@ -1,95 +1,107 @@
-<h1>EIT-Newspaper</h1>
-<div class="container mt-5">
-  <div class="btn-group" role="group">
-    <button
-      type="button"
-      class="btn"
-      [ngClass]="{ active: selectedCategory === 'All' }"
-      (click)="selectCategory('All')"
-    >
-      All
-    </button>
-    <button
-      type="button"
-      class="btn"
-      [ngClass]="{ active: selectedCategory === 'National' }"
-      (click)="selectCategory('National')"
-    >
-      National
-    </button>
-    <button
-      type="button"
-      class="btn"
-      [ngClass]="{ active: selectedCategory === 'Economy' }"
-      (click)="selectCategory('Economy')"
-    >
-      Economy
-    </button>
-    <button
-      type="button"
-      class="btn"
-      [ngClass]="{ active: selectedCategory === 'Sports' }"
-      (click)="selectCategory('Sports')"
-    >
-      Sports
-    </button>
-    <button
-      type="button"
-      class="btn"
-      [ngClass]="{ active: selectedCategory === 'Technology' }"
-      (click)="selectCategory('Technology')"
-    >
-      Technology
-    </button>
-  </div>
+<div class="container-fluid">
+  <div class="container">
+    <h1>EIT-Newspaper</h1>
+    <!-- Login Component -->
+    <app-login></app-login>
+    <div class="header">
+      <div class="container mt-5">
+        <div class="btn-group" role="group">
+          <button
+            type="button"
+            class="btn"
+            [ngClass]="{ active: selectedCategory === 'All' }"
+            (click)="selectCategory('All')"
+          >
+            All
+          </button>
+          <button
+            type="button"
+            class="btn"
+            [ngClass]="{ active: selectedCategory === 'National' }"
+            (click)="selectCategory('National')"
+          >
+            National
+          </button>
+          <button
+            type="button"
+            class="btn"
+            [ngClass]="{ active: selectedCategory === 'Economy' }"
+            (click)="selectCategory('Economy')"
+          >
+            Economy
+          </button>
+          <button
+            type="button"
+            class="btn"
+            [ngClass]="{ active: selectedCategory === 'Sports' }"
+            (click)="selectCategory('Sports')"
+          >
+            Sports
+          </button>
+          <button
+            type="button"
+            class="btn"
+            [ngClass]="{ active: selectedCategory === 'Technology' }"
+            (click)="selectCategory('Technology')"
+          >
+            Technology
+          </button>
+        </div>
 
-  <input
-    type="text"
-    id="filterText"
-    [(ngModel)]="filterText"
-    placeholder="Search Here"
-  />
-  <div *ngIf="isLoading; else content">
-    <app-loading-spinner />
-  </div>
-  <ng-template #content>
-    <table class="table" *ngIf="articleList.length > 0; else emptyList">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Subtitle</th>
-          <th>Category</th>
-          <th>Abstract</th>
-          <th>Thumbnail</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          *ngFor="
-            let article of articleList
-              | filterArticles : filterText : selectedCategory
-          "
-        >
-          <td>
-            <a [routerLink]="['/article', article.id]">{{ article.title }}</a>
-          </td>
-          <td>{{ article.subtitle }}</td>
-          <td>{{ article.category }}</td>
-          <td>{{ article.abstract }}</td>
-          <td>
-            <a [routerLink]="['/article', article.id]"
-              ><img
-                [src]="
-                  'data:' +
-                  article.image_media_type +
-                  ';base64,' +
-                  article.image_data
+        <input
+          type="text"
+          id="filterText"
+          [(ngModel)]="filterText"
+          placeholder="Search Here"
+        />
+        <div *ngIf="isLoading; else content">
+          <app-loading-spinner />
+        </div>
+        <ng-template #content>
+          <table class="table" *ngIf="articleList.length > 0; else emptyList">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Subtitle</th>
+                <th>Category</th>
+                <th>Abstract</th>
+                <th>Thumbnail</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let article of articleList
+                    | filterArticles : filterText : selectedCategory
                 "
-            /></a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <ng-template #emptyList>No articles for the current filters.</ng-template>
-  </ng-template>
+              >
+                <td>
+                  <a [routerLink]="['/article', article.id]">{{
+                    article.title
+                  }}</a>
+                </td>
+                <td>{{ article.subtitle }}</td>
+                <td>{{ article.category }}</td>
+                <td>{{ article.abstract }}</td>
+                <td>
+                  <a [routerLink]="['/article', article.id]"
+                    ><img
+                      [src]="
+                        'data:' +
+                        article.image_media_type +
+                        ';base64,' +
+                        article.image_data
+                      "
+                  /></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <ng-template #emptyList
+            >No articles for the current filters.</ng-template
+          >
+        </ng-template>
+      </div>
+    </div>
+  </div>
 </div>
