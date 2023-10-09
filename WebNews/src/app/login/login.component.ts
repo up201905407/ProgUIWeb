@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { User } from '../interfaces/user';
-import { Router } from '@angular/router';
+import { NewsService } from '../services/news.service';
 
 @Component({
   selector: 'app-login',
@@ -9,25 +9,32 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  constructor(private loginService: LoginService) {}
+  constructor(
+    private loginService: LoginService,
+    private newsService: NewsService
+  ) {}
 
   user: User | undefined;
   public username: string = '';
   public password: string = '';
-  isLogged: boolean = this.loginService.isLogged();
+  isLogged: boolean | undefined;
 
   login() {
-    console.log('Username: ', this.username);
-    console.log('Password: ', this.password);
-    this.loginService.login(this.username, this.password);
-
-    this.user = this.loginService.getUser();
-    console.log(this.user);
-    this.username = this.user?.surname ?? '';
+    this.loginService.login(this.username, this.password).subscribe((user) => {
+      if (user != undefined) {
+        this.newsService.setUserApiKey(user.apikey);
+        this.user = user;
+        this.isLogged = this.loginService.isLogged();
+      } else {
+        console.log('User is undefined!');
+      }
+    });
   }
+
   logout() {
     this.loginService.logout();
   }
+
   createArticle() {
     console.log('createArticle');
     // this.router.navigateByUrl('/articleCreate');

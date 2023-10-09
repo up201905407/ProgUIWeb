@@ -3,4 +3,8 @@ export interface User {
   surname: string;
   email: string;
   password: string;
+  apikey: string;
+  group: string;
+  user: string;
+  username: string;
 }

@@ -28,7 +28,7 @@ export class LoginService {
     const usereq = new HttpParams().set('username', name).set('passwd', pwd);
 
     // ?? do we need httpOptions here, otherwise they are unused?
-    return this.http.post<User>(this.loginUrl, usereq, this.httpOptions).pipe(
+    return this.http.post<User>(this.loginUrl, usereq).pipe(
       tap((user) => {
         this.user = user;
       })

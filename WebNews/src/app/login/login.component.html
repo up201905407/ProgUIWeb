@@ -1,8 +1,7 @@
 <!-- Login Form -->
 <form action="">
   <div *ngIf="isLogged; else guest">
-    Hello
-    <p>{{ this.user?.surname }}</p>
+    Hello {{ this.user?.username }}
     <button type="button" class="btn btn-primary" (click)="logout()">
       Logout
     </button>
@@ -11,6 +10,8 @@
     </button>
   </div>
   <ng-template #guest>
+    <p>DEV_TEAM_06</p>
+    <p>123006@3</p>
     <div class="container">
       <!-- Username Field -->
       <input
@@ -36,71 +37,3 @@
     </div>
   </ng-template>
 </form>
-<!-- <div class="container mt-5">
-  <div class="col-md-6 offset-md-3">
-    <div class="card">
-      <div class="card-header">Login</div>
-      <div class="card-body">
-        <form>
-          <div class="form-group">
-            <label for="username">Username</label>
-            <input
-              type="text"
-              class="form-control"
-              id="username"
-              [(ngModel)]="username"
-              name="username"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              [(ngModel)]="password"
-              name="password"
-              required
-            />
-          </div>
-          <button type="button" class="btn btn-primary" (click)="login()">
-            Login
-          </button>
-        </form>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header">Register</div>
-      <div class="card-body">
-        <form>
-          <div class="form-group">
-            <label for="username">Username</label>
-            <input
-              type="text"
-              class="form-control"
-              id="username"
-              [(ngModel)]="username"
-              name="username"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              [(ngModel)]="password"
-              name="password"
-              required
-            />
-          </div>
-          <button type="button" class="btn btn-primary" (click)="register()">
-            Register
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div> -->
