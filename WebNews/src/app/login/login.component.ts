@@ -33,6 +33,8 @@ export class LoginComponent {
 
   logout() {
     this.loginService.logout();
+    this.isLogged = this.loginService.isLogged();
+    // !! clear form
   }
 
   createArticle() {
