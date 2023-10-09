@@ -1,68 +1,73 @@
-<h1>Newspaper</h1>
+<h1>EIT-Newspaper</h1>
 <div class="container mt-5">
   <div class="btn-group" role="group">
     <button
       type="button"
       class="btn"
-      [ngClass]="{ active: selectedCategory === 'Category1' }"
-      (click)="selectCategory('Category1')"
+      [ngClass]="{ active: selectedCategory === 'All' }"
+      (click)="selectCategory('All')"
     >
-      Category 1
+      All
     </button>
     <button
       type="button"
       class="btn"
-      [ngClass]="{ active: selectedCategory === 'Category2' }"
-      (click)="selectCategory('Category2')"
+      [ngClass]="{ active: selectedCategory === 'National' }"
+      (click)="selectCategory('National')"
     >
-      Category 2
+      National
     </button>
     <button
       type="button"
       class="btn"
-      [ngClass]="{ active: selectedCategory === 'Category3' }"
-      (click)="selectCategory('Category3')"
+      [ngClass]="{ active: selectedCategory === 'Economy' }"
+      (click)="selectCategory('Economy')"
     >
-      Category 3
+      Economy
     </button>
     <button
       type="button"
       class="btn"
-      [ngClass]="{ active: selectedCategory === 'Category4' }"
-      (click)="selectCategory('Category4')"
+      [ngClass]="{ active: selectedCategory === 'Sports' }"
+      (click)="selectCategory('Sports')"
     >
-      Category 4
+      Sports
     </button>
     <button
       type="button"
       class="btn"
-      [ngClass]="{ active: selectedCategory === 'Category5' }"
-      (click)="selectCategory('Category5')"
+      [ngClass]="{ active: selectedCategory === 'Technology' }"
+      (click)="selectCategory('Technology')"
     >
-      Category 5
+      Technology
     </button>
   </div>
 </div>
 
-<input placeholder="Search" />
+<input type="text" id="filterText" [(ngModel)]="filterText" placeholder="Search Here">
 <div *ngIf="isLoading; else content">
   <app-loading-spinner />
 </div>
 <ng-template #content>
-  <table class="table">
+  <table class="table" *ngIf="articleList.length > 0; else emptyList">
     <thead>
       <tr>
-        <th>ID</th>
         <th>Title</th>
         <th>Subtitle</th>
+        <th>Category</th>
+        <th>Abstract</th>
+        <th>Thumbnail</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let article of articleList">
-        <td>{{ article.id }}</td>
-        <td>{{ article.title }}</td>
+      <tr *ngFor="let article of articleList | filterArticles: filterText: selectedCategory">
+        <td><a [routerLink]="['/article', article.id]">{{ article.title }}</a></td>
         <td>{{ article.subtitle }}</td>
+        <td>{{ article.category }}</td>
+        <td>{{ article.abstract }}</td>
+        <td><a [routerLink]="['/article', article.id]"><img [src]="'data:' + article.image_media_type + ';base64,' + article.image_data "></a></td>
       </tr>
     </tbody>
   </table>
+  <ng-template #emptyList>No articles for the current filters.</ng-template>
 </ng-template>

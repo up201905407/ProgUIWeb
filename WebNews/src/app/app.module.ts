@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HighlightDirective } from './directives/highlight.directive';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { FilterArticlesPipe } from './pipes/filter-articles.pipe';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
     LoginComponent,
     HighlightDirective,
     LoadingSpinnerComponent,
+    FilterArticlesPipe,
   ],
   imports: [
     BrowserModule,
