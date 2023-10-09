@@ -42,54 +42,54 @@
       Technology
     </button>
   </div>
-  <!-- Table for articles -->
+
+  <input
+    type="text"
+    id="filterText"
+    [(ngModel)]="filterText"
+    placeholder="Search Here"
+  />
   <div *ngIf="isLoading; else content">
     <app-loading-spinner />
   </div>
   <ng-template #content>
-    <table class="table">
+    <table class="table" *ngIf="articleList.length > 0; else emptyList">
       <thead>
         <tr>
-          <th>ID</th>
           <th>Title</th>
           <th>Subtitle</th>
+          <th>Category</th>
+          <th>Abstract</th>
+          <th>Thumbnail</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let article of articleList">
-          <td>{{ article.id }}</td>
-          <td>{{ article.title }}</td>
+        <tr
+          *ngFor="
+            let article of articleList
+              | filterArticles : filterText : selectedCategory
+          "
+        >
+          <td>
+            <a [routerLink]="['/article', article.id]">{{ article.title }}</a>
+          </td>
           <td>{{ article.subtitle }}</td>
+          <td>{{ article.category }}</td>
+          <td>{{ article.abstract }}</td>
+          <td>
+            <a [routerLink]="['/article', article.id]"
+              ><img
+                [src]="
+                  'data:' +
+                  article.image_media_type +
+                  ';base64,' +
+                  article.image_data
+                "
+            /></a>
+          </td>
         </tr>
       </tbody>
     </table>
+    <ng-template #emptyList>No articles for the current filters.</ng-template>
   </ng-template>
 </div>
-
-<input type="text" id="filterText" [(ngModel)]="filterText" placeholder="Search Here">
-<div *ngIf="isLoading; else content">
-  <app-loading-spinner />
-</div>
-<ng-template #content>
-  <table class="table" *ngIf="articleList.length > 0; else emptyList">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Subtitle</th>
-        <th>Category</th>
-        <th>Abstract</th>
-        <th>Thumbnail</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let article of articleList | filterArticles: filterText: selectedCategory">
-        <td><a [routerLink]="['/article', article.id]">{{ article.title }}</a></td>
-        <td>{{ article.subtitle }}</td>
-        <td>{{ article.category }}</td>
-        <td>{{ article.abstract }}</td>
-        <td><a [routerLink]="['/article', article.id]"><img [src]="'data:' + article.image_media_type + ';base64,' + article.image_data "></a></td>
-      </tr>
-    </tbody>
-  </table>
-  <ng-template #emptyList>No articles for the current filters.</ng-template>
-</ng-template>
