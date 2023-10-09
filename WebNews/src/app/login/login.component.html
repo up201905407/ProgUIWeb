@@ -1,1 +1,106 @@
-<p>login works!</p>
+<!-- Login Form -->
+<form action="">
+  <div *ngIf="isLogged; else guest">
+    Hello
+    <p>{{ this.user?.surname }}</p>
+    <button type="button" class="btn btn-primary" (click)="logout()">
+      Logout
+    </button>
+    <button type="button" class="btn btn-primary" (click)="createArticle()">
+      Create Article
+    </button>
+  </div>
+  <ng-template #guest>
+    <div class="container">
+      <!-- Username Field -->
+      <input
+        type="text"
+        id="username"
+        [(ngModel)]="username"
+        name="username"
+        placeholder="Username"
+        required
+      />
+      <!-- Password Field -->
+      <input
+        type="password"
+        id="password"
+        [(ngModel)]="password"
+        name="password"
+        placeholder="Password"
+        required
+      />
+      <button type="button" class="btn btn-primary" (click)="login()">
+        Login
+      </button>
+    </div>
+  </ng-template>
+</form>
+<!-- <div class="container mt-5">
+  <div class="col-md-6 offset-md-3">
+    <div class="card">
+      <div class="card-header">Login</div>
+      <div class="card-body">
+        <form>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              class="form-control"
+              id="username"
+              [(ngModel)]="username"
+              name="username"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              [(ngModel)]="password"
+              name="password"
+              required
+            />
+          </div>
+          <button type="button" class="btn btn-primary" (click)="login()">
+            Login
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">Register</div>
+      <div class="card-body">
+        <form>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              class="form-control"
+              id="username"
+              [(ngModel)]="username"
+              name="username"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              [(ngModel)]="password"
+              name="password"
+              required
+            />
+          </div>
+          <button type="button" class="btn btn-primary" (click)="register()">
+            Register
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div> -->
