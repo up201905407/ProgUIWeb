@@ -12,7 +12,7 @@ export class LoginService {
 
   private loginUrl = 'http://sanger.dia.fi.upm.es/pui-rest-news/login';
 
-  //private message: string;
+  // private message: string;
 
   private httpOptions = {
     headers: new HttpHeaders().set('Content-Type', 'x-www-form-urlencoded'),
@@ -27,6 +27,7 @@ export class LoginService {
   login(name: string, pwd: string): Observable<User> {
     const usereq = new HttpParams().set('username', name).set('passwd', pwd);
 
+    // ?? do we need httpOptions here, otherwise they are unused?
     return this.http.post<User>(this.loginUrl, usereq).pipe(
       tap((user) => {
         this.user = user;
