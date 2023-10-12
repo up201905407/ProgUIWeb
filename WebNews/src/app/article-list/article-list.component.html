@@ -44,30 +44,56 @@
   </div>
 </div>
 
-<input type="text" id="filterText" [(ngModel)]="filterText" placeholder="Search Here">
+<input
+  type="text"
+  id="filterText"
+  [(ngModel)]="filterText"
+  placeholder="Search Here"
+/>
 <div *ngIf="isLoading; else content">
   <app-loading-spinner />
 </div>
 <ng-template #content>
-  <table class="table" *ngIf="articleList.length > 0; else emptyList">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Subtitle</th>
-        <th>Category</th>
-        <th>Abstract</th>
-        <th>Thumbnail</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let article of articleList | filterArticles: filterText: selectedCategory">
-        <td><a [routerLink]="['/article', article.id]">{{ article.title }}</a></td>
-        <td>{{ article.subtitle }}</td>
-        <td>{{ article.category }}</td>
-        <td>{{ article.abstract }}</td>
-        <td><a [routerLink]="['/article', article.id]"><img [src]="'data:' + article.image_media_type + ';base64,' + article.image_data "></a></td>
-      </tr>
-    </tbody>
-  </table>
-  <ng-template #emptyList>No articles for the current filters.</ng-template>
+  <div
+    class="container text-center"
+    *ngIf="articleList.length > 0; else emptyList"
+  >
+    <div class="row">
+      <ul
+        *ngFor="
+          let article of articleList
+            | filterArticles : filterText : selectedCategory
+        "
+        class="ulBox"
+      >
+        <li>
+          <a class="listImg" [routerLink]="['/article', article.id]"
+            ><img
+              *ngIf="article.thumbnail_media_type && article.thumbnail_image"
+              [src]="
+                'data:' +
+                article.thumbnail_media_type +
+                ';base64,' +
+                article.thumbnail_image
+              " />
+            <img
+              class="listImg"
+              [hidden]="article.thumbnail_media_type && article.thumbnail_image"
+              src="../../assets/no_pic.png"
+          /></a>
+        </li>
+        <li>
+          <a class="listTitle" [routerLink]="['/article', article.id]">{{
+            article.title
+          }}</a>
+        </li>
+        <li class="listCategory">{{ article.category }}</li>
+        <li class="listSubtitle">{{ article.subtitle }}</li>
+        <li class="listAbstract">{{ article.abstract }}</li>
+      </ul>
+    </div>
+  </div>
+  <ng-template #emptyList>
+    <div class="noData">No articles for the current filters.</div>
+  </ng-template>
 </ng-template>
