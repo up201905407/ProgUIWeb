@@ -1,0 +1,32 @@
+ul li {
+  list-style-type: none;
+}
+.ulBox {
+  max-width: 300px;
+  .listImg {
+    margin-bottom: 10px;
+    display: block;
+    max-width: 300px;
+  }
+  .listTitle {
+    display: block;
+    font-size: xx-large;
+    margin: 20px 0px;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+  }
+  .listCategory,
+  .listSubtitle {
+    margin: 20px 0px;
+    font-size: medium;
+    text-align: center;
+  }
+}
+
+.noData {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: larger;
+}
