@@ -1,7 +1,8 @@
 <!-- Login Form -->
-<form #userForm="ngForm">
-  <div *ngIf="isLogged; else guest">
-    Hello {{ this.user?.username }}
+<form>
+  <div *ngIf="loggedIn; else guest">
+    Hello
+    <p class="fw-bold">{{ this.user?.username }}</p>
     <button type="button" class="btn btn-primary" (click)="logout()">
       Logout
     </button>
@@ -16,7 +17,7 @@
   <ng-template #guest>
     <p>DEV_TEAM_06</p>
     <p>123006@3</p>
-    <div class="container form-group">
+    <div class="container">
       <!-- Username Field -->
       <input
         type="text"
