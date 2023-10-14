@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { User } from '../interfaces/user';
 import { NewsService } from '../services/news.service';
@@ -9,11 +9,25 @@ import { NgForm } from '@angular/forms';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private newsService: NewsService
   ) {}
+
+  ngOnInit(): void {
+    this.isLoggedIn$.subscribe(
+      (value: boolean) => {
+        this.loggedIn = value;
+      },
+      (error: any) => {
+        console.error('Error:', error);
+      },
+      () => {
+        console.log('Observable complete');
+      }
+    );
+  }
 
   @ViewChild('userForm')
   userForm!: NgForm;
@@ -21,14 +35,14 @@ export class LoginComponent {
   user: User | undefined;
   public username: string = '';
   public password: string = '';
-  isLogged: boolean | undefined;
+  isLoggedIn$ = this.loginService.isLogged$;
+  loggedIn: boolean = false;
 
   login() {
     this.loginService.login(this.username, this.password).subscribe((user) => {
       if (user != undefined) {
         this.newsService.setUserApiKey(user.apikey);
         this.user = user;
-        this.isLogged = this.loginService.isLogged();
       } else {
         console.log('User is undefined!');
       }
@@ -37,7 +51,6 @@ export class LoginComponent {
 
   logout() {
     this.loginService.logout();
-    this.isLogged = this.loginService.isLogged();
     this.newsService.setAnonymousApiKey();
     this.userForm.reset();
   }
