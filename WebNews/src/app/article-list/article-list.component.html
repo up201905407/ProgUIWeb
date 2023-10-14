@@ -89,6 +89,14 @@
                   <div class="listCategory">{{ article.category }}</div>
                   <div class="listSubtitle">{{ article.subtitle }}</div>
                   <div class="listAbstract">{{ article.abstract }}</div>
+                  <div *ngIf="loggedIn">
+                    <button type="button" class="btn btn-primary" [routerLink]="['/article-edition', article.id]">
+                      Edit
+                    </button>
+                    <button type="button" class="btn btn-primary" (click)="removeArticle(article.id)">
+                      Remove
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
