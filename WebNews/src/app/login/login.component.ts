@@ -18,11 +18,12 @@ export class LoginComponent implements OnInit {
     this.loginService.isLogged$.subscribe((state) => {
       this.loggedIn = state;
     });
+    this.user = this.loginService.getUser();
   }
 
   user: User | undefined;
-  public username!: string;
-  public password!: string;
+  public username: string = '';
+  public password: string = '';
   loggedIn: boolean = false;
 
   login() {
