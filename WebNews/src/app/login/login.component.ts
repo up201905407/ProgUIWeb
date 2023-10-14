@@ -16,17 +16,9 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.isLoggedIn$.subscribe(
-      (value: boolean) => {
-        this.loggedIn = value;
-      },
-      (error: any) => {
-        console.error('Error:', error);
-      },
-      () => {
-        console.log('Observable complete');
-      }
-    );
+    this.loginService.isLogged$.subscribe((state) => {
+      this.loggedIn = state;
+    });
   }
 
   @ViewChild('userForm')
@@ -35,7 +27,6 @@ export class LoginComponent implements OnInit {
   user: User | undefined;
   public username: string = '';
   public password: string = '';
-  isLoggedIn$ = this.loginService.isLogged$;
   loggedIn: boolean = false;
 
   login() {
@@ -53,10 +44,5 @@ export class LoginComponent implements OnInit {
     this.loginService.logout();
     this.newsService.setAnonymousApiKey();
     this.userForm.reset();
-  }
-
-  createArticle() {
-    console.log('createArticle');
-    // this.router.navigateByUrl('/articleCreate');
   }
 }

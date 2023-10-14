@@ -1,7 +1,8 @@
 <!-- Login Form -->
 <form #userForm="ngForm">
   <div *ngIf="loggedIn; else guest">
-    Hello {{ this.user?.username }}
+    Hello
+    <p class="font-weight-bold">{{ this.user?.username }}</p>
     <button type="button" class="btn btn-primary" (click)="logout()">
       Logout
     </button>
