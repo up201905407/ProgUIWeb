@@ -45,8 +45,29 @@ input {
 
 .header {
   display: flex;
-  flex-direction: row;
-  justify-content: center; /* Center the input horizontally */
+  flex-direction: column;
   align-items: center; /* Vertically center the content */
   margin-top: 20px;
+}
+
+.selectedCategory {
+  font-weight: bold;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
+}
+
+.category-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.search-bar {
+  text-align: right;
+  flex-grow: 1;
 }
