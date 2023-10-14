@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { User } from '../interfaces/user';
 import { NewsService } from '../services/news.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,9 @@ export class LoginComponent {
     private loginService: LoginService,
     private newsService: NewsService
   ) {}
+
+  @ViewChild('userForm')
+  userForm!: NgForm;
 
   user: User | undefined;
   public username: string = '';
@@ -34,7 +38,8 @@ export class LoginComponent {
   logout() {
     this.loginService.logout();
     this.isLogged = this.loginService.isLogged();
-    // !! clear form
+    this.newsService.setAnonymousApiKey();
+    this.userForm.reset();
   }
 
   createArticle() {

@@ -1,18 +1,22 @@
 <!-- Login Form -->
-<form action="">
-  <div [(ngModel)]="isLogged" *ngIf="isLogged; else guest">
+<form #userForm="ngForm">
+  <div *ngIf="isLogged; else guest">
     Hello {{ this.user?.username }}
     <button type="button" class="btn btn-primary" (click)="logout()">
       Logout
     </button>
-    <button type="button" class="btn btn-primary" (click)="createArticle()">
+    <button
+      type="button"
+      class="btn btn-primary"
+      [routerLink]="['/article-edition']"
+    >
       Create Article
     </button>
   </div>
   <ng-template #guest>
     <p>DEV_TEAM_06</p>
     <p>123006@3</p>
-    <div class="container">
+    <div class="container form-group">
       <!-- Username Field -->
       <input
         type="text"
