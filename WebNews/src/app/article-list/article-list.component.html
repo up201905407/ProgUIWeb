@@ -65,35 +65,35 @@
         <ng-template #content>
           <div class="container text-center">
             <div class="row">
-              <ul
+              <div
                 *ngFor="let article of articleList | filterArticles : filterText : selectedCategory"
-                class="ulBox"
+                class="article-box"
               >
-                <li>
+                <div class="article-content">
                   <a class="listImg" [routerLink]="['/article', article.id]">
-                    <img
-                      *ngIf="article.thumbnail_media_type && article.thumbnail_image"
-                      [src]="'data:' + article.thumbnail_media_type + ';base64,' + article.thumbnail_image"
-                    />
-                    <img
-                      class="listImg"
-                      [hidden]="article.thumbnail_media_type && article.thumbnail_image"
-                      src="../../assets/no_pic.png"
-                    />
+                    <div class="image-container">
+                      <img
+                        *ngIf="article.thumbnail_media_type && article.thumbnail_image"
+                        [src]="'data:' + article.thumbnail_media_type + ';base64,' + article.thumbnail_image"
+                      />
+                      <img
+                        class="listImg"
+                        [hidden]="article.thumbnail_media_type && article.thumbnail_image"
+                        src="../../assets/no_pic.png"
+                      />
+                    </div>
                   </a>
-                </li>
-                <li>
                   <a class="listTitle" [routerLink]="['/article', article.id]">{{ article.title }}</a>
-                </li>
-                <li class="listCategory">{{ article.category }}</li>
-                <li class="listSubtitle">{{ article.subtitle }}</li>
-                <li class="listAbstract">{{ article.abstract }}</li>
-              </ul>
+                  <div class="listCategory">{{ article.category }}</div>
+                  <div class="listSubtitle">{{ article.subtitle }}</div>
+                  <div class="listAbstract">{{ article.abstract }}</div>
+                </div>
+              </div>
             </div>
-          </div>
-          <ng-template #emptyList>
-            <div class="noData">No articles for the current filters.</div>
-          </ng-template>
+          </div>     
+        <ng-template #emptyList>
+          <div class="noData">No articles for the current filters.</div>
+        </ng-template>
         </ng-template>
       </div>
     </div>
