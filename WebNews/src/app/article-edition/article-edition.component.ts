@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Article } from '../interfaces/article';
 import * as _ from 'lodash';
@@ -6,13 +6,16 @@ import { NewsService } from '../services/news.service';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alert } from '../interfaces/alert';
+import { LoginService } from '../services/login.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { toJSDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-calendar';
 
 @Component({
   selector: 'app-article-edition',
   templateUrl: './article-edition.component.html',
   styleUrls: ['./article-edition.component.css'],
 })
-export class ArticleEditionComponent {
+export class ArticleEditionComponent{
   alerts!: Alert[];
   articleList!: Article[];
   article!: Article;
@@ -24,13 +27,17 @@ export class ArticleEditionComponent {
   idGiven: boolean = false;
   isLoading = true;
   public Editor = ClassicEditor;
+  bodyHtmlContent!: SafeHtml;
+  abstractHtmlContent!: SafeHtml;
 
   @ViewChild('articleForm') articleForm!: NgForm;
 
   constructor(
+    private loginService: LoginService,
     private newsService: NewsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private sanitizer: DomSanitizer
   ) {
     this.article = {
       id: 0,
@@ -46,6 +53,8 @@ export class ArticleEditionComponent {
       username: 'placeholder_username',
     };
     this.alerts = [];
+    
+
   }
 
   ngOnInit(): void {
@@ -64,10 +73,26 @@ export class ArticleEditionComponent {
         },
         (error) => {
           this.showError('Please provide a valid article id');
+        },
+        ()=>{
+          this.updateAbstractHtmlContent();
+          this.updateBodyHtmlContent();
         }
       );
     }
+    else{
+      this.isLoading=false;
+    }
   }
+
+  updateAbstractHtmlContent() {
+    this.abstractHtmlContent = this.sanitizer.bypassSecurityTrustHtml(this.article.abstract);
+  }
+
+  updateBodyHtmlContent() {
+    this.bodyHtmlContent = this.sanitizer.bypassSecurityTrustHtml(this.article.body);
+  }
+  
   getArticleList() {
     this.newsService.getArticles().subscribe((list) => {
       this.articleList = list;
@@ -160,8 +185,15 @@ export class ArticleEditionComponent {
     else {
       // check for a unique id
       this.article.id = this.getNextAvailableId();
-      //TODO: Update article with current username
-      this.article.username = 'placeholder_name';
+      //Update article with current username
+      this.article.username="anonymous";
+      if(this.loginService.getUser()){
+        let user= this.loginService.getUser();
+        if(user!==undefined){
+          this.article.username=user.username;
+        }
+      }
+      console.log("username: "+this.article.username);
       this.newsService.createArticle(this.article).subscribe(
         (article) => {
           this.showSuccess();
