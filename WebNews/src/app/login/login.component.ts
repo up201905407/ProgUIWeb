@@ -2,7 +2,6 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { User } from '../interfaces/user';
 import { NewsService } from '../services/news.service';
-import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -21,12 +20,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  @ViewChild('userForm')
-  userForm!: NgForm;
-
   user: User | undefined;
-  public username: string = '';
-  public password: string = '';
+  public username!: string;
+  public password!: string;
   loggedIn: boolean = false;
 
   login() {
@@ -41,8 +37,9 @@ export class LoginComponent implements OnInit {
   }
 
   logout() {
+    this.username = '';
+    this.password = '';
     this.loginService.logout();
     this.newsService.setAnonymousApiKey();
-    this.userForm.reset();
   }
 }
