@@ -75,8 +75,6 @@ export class NewsService {
   }
 
   createArticle(article: Article): Observable<Article> {
-    console.log('Creating article');
-    console.log(article);
     return this.http.post<Article>(this.articleUrl, article, this.httpOptions);
   }
 }

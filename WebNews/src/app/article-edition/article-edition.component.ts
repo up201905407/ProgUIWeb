@@ -1,4 +1,10 @@
-import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Article } from '../interfaces/article';
 import * as _ from 'lodash';
@@ -15,7 +21,7 @@ import { toJSDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-calendar';
   templateUrl: './article-edition.component.html',
   styleUrls: ['./article-edition.component.css'],
 })
-export class ArticleEditionComponent{
+export class ArticleEditionComponent {
   alerts!: Alert[];
   articleList!: Article[];
   article!: Article;
@@ -40,7 +46,6 @@ export class ArticleEditionComponent{
     private sanitizer: DomSanitizer
   ) {
     this.article = {
-      id: 0,
       id_user: 0,
       abstract: '',
       subtitle: '',
@@ -53,8 +58,6 @@ export class ArticleEditionComponent{
       username: 'placeholder_username',
     };
     this.alerts = [];
-    
-
   }
 
   ngOnInit(): void {
@@ -74,25 +77,28 @@ export class ArticleEditionComponent{
         (error) => {
           this.showError('Please provide a valid article id');
         },
-        ()=>{
+        () => {
           this.updateAbstractHtmlContent();
           this.updateBodyHtmlContent();
         }
       );
-    }
-    else{
-      this.isLoading=false;
+    } else {
+      this.isLoading = false;
     }
   }
 
   updateAbstractHtmlContent() {
-    this.abstractHtmlContent = this.sanitizer.bypassSecurityTrustHtml(this.article.abstract);
+    this.abstractHtmlContent = this.sanitizer.bypassSecurityTrustHtml(
+      this.article.abstract
+    );
   }
 
   updateBodyHtmlContent() {
-    this.bodyHtmlContent = this.sanitizer.bypassSecurityTrustHtml(this.article.body);
+    this.bodyHtmlContent = this.sanitizer.bypassSecurityTrustHtml(
+      this.article.body
+    );
   }
-  
+
   getArticleList() {
     this.newsService.getArticles().subscribe((list) => {
       this.articleList = list;
@@ -184,17 +190,17 @@ export class ArticleEditionComponent{
     // New article
     else {
       // check for a unique id
-      this.article.id = this.getNextAvailableId();
-      this.article.id=6;
+      // this.article.id = this.getNextAvailableId();
+      // this.article.id=6;
       // Update article with current username
-      this.article.username="anonymous";
-      if(this.loginService.getUser()){
-        let user= this.loginService.getUser();
-        if(user!==undefined){
-          this.article.username=user.username;
+      // this.article.username="anonymous";
+      if (this.loginService.getUser()) {
+        let user = this.loginService.getUser();
+        if (user !== undefined) {
+          this.article.username = user.username;
         }
       }
-      console.log("username: "+this.article.username);
+      console.log('username: ' + this.article.username);
       this.newsService.createArticle(this.article).subscribe(
         (article) => {
           this.showSuccess();
@@ -219,7 +225,7 @@ export class ArticleEditionComponent{
 
   // Back to main page
   navigateToArticleList() {
-    this.router.navigate(['/article-list']); 
+    this.router.navigate(['/article-list']);
   }
 
   getCurrentDateTime(): string {
