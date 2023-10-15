@@ -56,7 +56,12 @@
         <div *ngIf="isLoading; else content">
           <app-loading-spinner />
         </div>
-        <ng-template #content>
+        <ng-template
+          #content
+          [(ngModel)]="articleList"
+          name="articleList"
+          ngDefaultControl
+        >
           <div
             class="container text-center"
             *ngIf="articleList.length > 0; else emptyList"
@@ -108,7 +113,11 @@
                     >
                       Edit
                     </button>
-                    <button type="button" class="btn btn-primary">
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      (click)="removeArticle(article.id)"
+                    >
                       Remove
                     </button>
                   </li>
