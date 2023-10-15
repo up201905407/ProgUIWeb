@@ -1,16 +1,11 @@
 <!-- Login Form -->
-<form>
-  <div *ngIf="loggedIn; else guest">
-    Hello
-    <p class="fw-bold">{{ this.user?.username }}</p>
+<form action="">
+  <div *ngIf="isLogged; else guest">
+    Hello {{ this.user?.username }}
     <button type="button" class="btn btn-primary" (click)="logout()">
       Logout
     </button>
-    <button
-      type="button"
-      class="btn btn-primary"
-      [routerLink]="['/article-edition']"
-    >
+    <button type="button" class="btn btn-primary" (click)="createArticle()">
       Create Article
     </button>
   </div>

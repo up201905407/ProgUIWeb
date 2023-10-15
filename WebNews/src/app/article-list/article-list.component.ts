@@ -13,7 +13,7 @@ export class ArticleListComponent implements OnInit {
   isLoading = true;
   selectedCategory: string = 'All';
   filterText: string = '';
-  loggedIn: boolean = false;
+  isLogged = this.loginService.isLogged();
   search: string = '';
 
   constructor(
@@ -23,9 +23,6 @@ export class ArticleListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getArticleList();
-    this.loginService.isLogged$.subscribe((state) => {
-      this.loggedIn = state;
-    });
   }
 
   // The service capture the error and the controller ignores it
@@ -38,9 +35,5 @@ export class ArticleListComponent implements OnInit {
 
   selectCategory(category: string): void {
     this.selectedCategory = category;
-  }
-
-  removeArticle(id: number) {
-    this.newsService.deleteArticle(id);
   }
 }
