@@ -200,7 +200,6 @@ export class ArticleEditionComponent {
           this.article.username = user.username;
         }
       }
-      console.log('username: ' + this.article.username);
       this.newsService.createArticle(this.article).subscribe(
         (article) => {
           this.showSuccess();
