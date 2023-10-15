@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { User } from '../interfaces/user';
 import { NewsService } from '../services/news.service';
@@ -8,23 +8,29 @@ import { NewsService } from '../services/news.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private newsService: NewsService
   ) {}
 
+  ngOnInit(): void {
+    this.loginService.isLogged$.subscribe((state) => {
+      this.loggedIn = state;
+    });
+    this.user = this.loginService.getUser();
+  }
+
   user: User | undefined;
   public username: string = '';
   public password: string = '';
-  isLogged: boolean | undefined;
+  loggedIn: boolean = false;
 
   login() {
     this.loginService.login(this.username, this.password).subscribe((user) => {
       if (user != undefined) {
         this.newsService.setUserApiKey(user.apikey);
         this.user = user;
-        this.isLogged = this.loginService.isLogged();
       } else {
         console.log('User is undefined!');
       }
@@ -32,11 +38,9 @@ export class LoginComponent {
   }
 
   logout() {
+    this.username = '';
+    this.password = '';
     this.loginService.logout();
-  }
-
-  createArticle() {
-    console.log('createArticle');
-    // this.router.navigateByUrl('/articleCreate');
+    this.newsService.setAnonymousApiKey();
   }
 }
