@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NewsService } from '../services/news.service';
 import { Alert } from '../interfaces/alert';
 import { Router } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-article-details',
@@ -16,18 +17,20 @@ export class ArticleDetailsComponent {
   idGiven: boolean = false;
   alerts!: Alert[];
   isLoading = true;
+  bodyHtmlContent!: SafeHtml;
+  abstractHtmlContent!: SafeHtml;
 
   constructor(
     private newsService: NewsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private sanitizer: DomSanitizer
   ) {
     this.alerts = [];
   }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
-      // this.mailId = params.get('id') ?? 'DefaultMailId';
       const id = +params.get('id')! || null;
       this.newsService.getArticle(id!).subscribe(
         (article) => {
@@ -36,9 +39,21 @@ export class ArticleDetailsComponent {
         },
         (error) => {
           this.showError('Please provide a valid article id');
+        },
+        ()=>{
+          this.updateAbstractHtmlContent();
+          this.updateBodyHtmlContent();
         }
       );
     });
+  }
+
+  updateAbstractHtmlContent() {
+    this.abstractHtmlContent = this.sanitizer.bypassSecurityTrustHtml(this.article.abstract);
+  }
+
+  updateBodyHtmlContent() {
+    this.bodyHtmlContent = this.sanitizer.bypassSecurityTrustHtml(this.article.body);
   }
 
   // Alerts

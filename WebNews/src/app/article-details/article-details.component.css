@@ -1,3 +1,14 @@
+#homebutton {
+    padding: 10px 20px; 
+    border: none; 
+    cursor: pointer; 
+    margin: 2%, 2%
+  }
+  
+#homebutton:hover {
+    background-color: #0056b3; 
+}
+
 .title {
     text-align: center;
     font-size: 28px;
@@ -58,7 +69,6 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    /* This will make it cover the entire viewport height */
 }
 
 .jumbotron {
