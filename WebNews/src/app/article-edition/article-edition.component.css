@@ -72,7 +72,12 @@
   color: #777;
   font-style: italic;
 }
-
+.body{
+  text-align: center;
+}
+.form-group{
+  margin-top: 20px;
+}
 /* Spacing */
 .title,
 .subtitle,

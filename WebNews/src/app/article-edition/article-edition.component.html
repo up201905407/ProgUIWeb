@@ -14,11 +14,11 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="jumbotron">
-                    <h1 class="display-4">Create News Article</h1>
+                    <h1 class="display-4" style="font-weight: bold">Create News Article</h1>
 
                     <form #articleForm="ngForm" (ngSubmit)="save()">
                         <div class="form-group">
-                            <label> Title: </label>
+                            <label style="font-weight: bold"> Title: </label>
                             <input class="form-control" type="text" required [(ngModel)]="article.title" name="title"
                                 #stitle="ngModel" [ngClass]="stitle.valid || stitle['pristine'] ? '': 'bg-danger'"
                                 minlength="5" maxlength="100" appHighlight>
@@ -27,7 +27,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label> Subtitle: </label>
+                            <label style="font-weight: bold"> Subtitle: </label>
                             <input class="form-control" type="text" required [(ngModel)]="article.subtitle "
                                 name="ssubtitle " #ssubtitle="ngModel"
                                 [ngClass]="ssubtitle.valid || ssubtitle ['pristine'] ? '': 'bg-danger'" minlength="5"
@@ -38,7 +38,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label> Category: </label>
+                                <label style="font-weight: bold"> Category: </label>
                                 <select class="form-control" required [(ngModel)]="article.category" name="category"
                                     #category="ngModel" appHighlight>
                                     <option value="National">National</option>
@@ -51,9 +51,9 @@
 
                         </div>
                         <div class="form-group">
-                            <label> Abstract: </label>
-                            <input class="form-control" type="text" required [(ngModel)]="article.abstract" (ngModelChange)="updateAbstractHtmlContent()"
-                                name="sabstract" #sabstract="ngModel"
+                            <label style="font-weight: bold"> Abstract: </label>
+                            <input class="form-control" type="text" required [(ngModel)]="article.abstract"
+                                (ngModelChange)="updateAbstractHtmlContent()" name="sabstract" #sabstract="ngModel"
                                 [ngClass]="sabstract.valid || sabstract.pristine ? '': 'bg-danger'" minlength="5"
                                 maxlength="500" appHighlight>
                             <div class="alert alert-danger" *ngIf="sabstract.touched && !sabstract.valid">
@@ -62,17 +62,19 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label >Image:</label>
+                            <label style="font-weight: bold">Image:</label>
                             <input class="form-control" type="file" (change)="fileChangeEvent($event)">
                         </div>
-
-                        <label for="body">Body:</label>
-                        <ckeditor [(ngModel)]="article.body" (ngModelChange)="updateBodyHtmlContent()" name="sbody" [editor]="Editor" data="<p></p>"></ckeditor>
-
+                        <div class="form-group">
+                            <label for="body" style="font-weight: bold">Body:</label>
+                            <ckeditor [(ngModel)]="article.body" (ngModelChange)="updateBodyHtmlContent()" name="sbody"
+                                [editor]="Editor" data="<p></p>"></ckeditor>
+                        </div>
 
                         <button type="submit" class="btn btn-primary btn-sm mr-1" id="savebutton"
                             [disabled]="!articleForm.valid">Save</button>
-                        <button type="button" (click)="clean()" class="btn btn-primary btn-sm" id="cleanbutton">Clean</button>
+                        <button type="button" (click)="clean()" class="btn btn-primary btn-sm"
+                            id="cleanbutton">Clean</button>
 
                     </form>
 
@@ -97,8 +99,8 @@
                         <div class="category">{{ article.category }}</div>
                         <img [src]="'data:' + article.image_media_type + ';base64,' +article.image_data "
                             *ngIf="article.image_data">
-                        <div class="abstract" [innerHTML]="abstractHtmlContent" ></div>
-                        <div [innerHTML]="bodyHtmlContent"></div>
+                        <div class="abstract" [innerHTML]="abstractHtmlContent"></div>
+                        <div class="body" [innerHTML]="bodyHtmlContent"></div>
                     </div>
                 </div>
             </div>
