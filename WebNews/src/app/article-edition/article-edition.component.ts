@@ -164,16 +164,6 @@ export class ArticleEditionComponent {
     return true;
   }
 
-  //Find the smallest available id
-  getNextAvailableId(): number {
-    const usedIds = new Set(this.articleList.map((article) => article.id));
-    let id = 1;
-    while (usedIds.has(id)) {
-      id++;
-    }
-    return id;
-  }
-
   save(): void {
     this.article.update_date = this.getCurrentDateTime();
     // Update article
@@ -189,11 +179,6 @@ export class ArticleEditionComponent {
     }
     // New article
     else {
-      // check for a unique id
-      // this.article.id = this.getNextAvailableId();
-      // this.article.id=6;
-      // Update article with current username
-      // this.article.username="anonymous";
       if (this.loginService.getUser()) {
         let user = this.loginService.getUser();
         if (user !== undefined) {
