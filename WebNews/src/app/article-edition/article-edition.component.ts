@@ -185,7 +185,8 @@ export class ArticleEditionComponent{
     else {
       // check for a unique id
       this.article.id = this.getNextAvailableId();
-      //Update article with current username
+      this.article.id=6;
+      // Update article with current username
       this.article.username="anonymous";
       if(this.loginService.getUser()){
         let user= this.loginService.getUser();
@@ -218,7 +219,7 @@ export class ArticleEditionComponent{
 
   // Back to main page
   navigateToArticleList() {
-    this.router.navigate(['/article-list']); // Replace '/article-list' with the actual route of your "article-list" page
+    this.router.navigate(['/article-list']); 
   }
 
   getCurrentDateTime(): string {
