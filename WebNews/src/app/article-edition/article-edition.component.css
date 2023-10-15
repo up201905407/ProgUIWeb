@@ -17,23 +17,6 @@
 .display-4{
   text-align: center;
 }
-
-#savebutton, #cleanbutton {
-  margin: 10px; 
-  padding: 10px ,20px; 
-}
-
-#homebutton {
-  padding: 10px 20px; 
-  border: none; 
-  cursor: pointer; 
-  margin: 2%, 2%
-}
-
-#homebutton:hover {
-  background-color: #0056b3; /* Change the background color on hover */
-}
-
 .title {
   text-align: center;
   font-size: 28px;

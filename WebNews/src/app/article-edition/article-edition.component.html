@@ -7,10 +7,9 @@
 </div>
 
 <ng-template #content>
+    <button class="btn btn-secondary float-end" (click)="navigateToArticleList()">Homepage</button>
+
     <div class="container mt-5">
-        <div class="col-md-1">
-            <button class="btn btn-secondary" id="homebutton" (click)="navigateToArticleList()">Home</button>
-        </div>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="jumbotron">
@@ -52,7 +51,7 @@
                         </div>
                         <div class="form-group">
                             <label> Abstract: </label>
-                            <input class="form-control" type="text" required [(ngModel)]="article.abstract" (ngModelChange)="updateAbstractHtmlContent()"
+                            <input class="form-control" type="text" required [(ngModel)]="article.abstract"
                                 name="sabstract" #sabstract="ngModel"
                                 [ngClass]="sabstract.valid || sabstract.pristine ? '': 'bg-danger'" minlength="5"
                                 maxlength="500" appHighlight>
@@ -62,17 +61,19 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label >Image:</label>
                             <input class="form-control" type="file" (change)="fileChangeEvent($event)">
+                            <div class="alert alert-warning" *ngIf="!isImageSaved">
+                                <div>Please provide a picture</div>
+                            </div>
                         </div>
 
                         <label for="body">Body:</label>
-                        <ckeditor [(ngModel)]="article.body" (ngModelChange)="updateBodyHtmlContent()" name="sbody" [editor]="Editor" data="<p></p>"></ckeditor>
+                        <ckeditor [(ngModel)]="article.body" name="sbody" [editor]="Editor" data="<p></p>"></ckeditor>
 
 
-                        <button type="submit" class="btn btn-primary btn-sm mr-1" id="savebutton"
-                            [disabled]="!articleForm.valid">Save</button>
-                        <button type="button" (click)="clean()" class="btn btn-primary btn-sm" id="cleanbutton">Clean</button>
+                        <button type="submit" class="btn btn-primary btn-sm mr-1"
+                            [disabled]="!articleForm.valid || !isImageSaved">Save</button>
+                        <button type="button" (click)="clean()" class="btn btn-primary btn-sm">Clean</button>
 
                     </form>
 
@@ -86,7 +87,6 @@
     </div>
 
 
-
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -97,8 +97,8 @@
                         <div class="category">{{ article.category }}</div>
                         <img [src]="'data:' + article.image_media_type + ';base64,' +article.image_data "
                             *ngIf="article.image_data">
-                        <div class="abstract" [innerHTML]="abstractHtmlContent" ></div>
-                        <div [innerHTML]="bodyHtmlContent"></div>
+                        <div class="abstract">{{ article.abstract }}</div>
+                        <div [innerHTML]="article.body"></div>
                     </div>
                 </div>
             </div>

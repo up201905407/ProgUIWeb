@@ -7,10 +7,9 @@
 </div>
 
 <ng-template #content>
+    <button class="btn btn-secondary float-end" (click)="navigateToArticleList()">Homepage</button>
+
     <div class="container mt-5">
-        <div class="col-md-1">
-            <button class="btn btn-secondary" id="homebutton" (click)="navigateToArticleList()">Home</button>
-        </div>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="jumbotron">
@@ -20,8 +19,8 @@
                         <div class="category">{{ article.category }}</div>
                         <img [src]="'data:' + article.image_media_type + ';base64,' +article.image_data "
                             *ngIf="article.image_data">
-                        <div class="abstract" [innerHTML]="abstractHtmlContent"></div>
-                        <div [innerHTML]="bodyHtmlContent"></div>
+                        <div class="abstract">{{ article.abstract }}</div>
+                        <div [innerHTML]="article.body"></div>
 
                         <div class="text-muted mt-3">
                             <small>{{ article.username }}</small><br>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../interfaces/user';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
@@ -9,8 +9,6 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 })
 export class LoginService {
   private user: User | undefined;
-  private logged = new BehaviorSubject<boolean>(false);
-  isLogged$ = this.logged.asObservable();
 
   private loginUrl = 'http://sanger.dia.fi.upm.es/pui-rest-news/login';
 
@@ -30,7 +28,6 @@ export class LoginService {
     const usereq = new HttpParams().set('username', name).set('passwd', pwd);
 
     // ?? do we need httpOptions here, otherwise they are unused?
-    this.logged.next(true);
     return this.http.post<User>(this.loginUrl, usereq).pipe(
       tap((user) => {
         this.user = user;
@@ -44,7 +41,6 @@ export class LoginService {
 
   logout() {
     this.user = undefined;
-    this.logged.next(false);
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
