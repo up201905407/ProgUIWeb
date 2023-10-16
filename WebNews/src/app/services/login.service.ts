@@ -29,11 +29,9 @@ export class LoginService {
   login(name: string, pwd: string): Observable<User> {
     const usereq = new HttpParams().set('username', name).set('passwd', pwd);
 
-    // ?? do we need httpOptions here, otherwise they are unused?
-    this.logged.next(true);
     return this.http.post<User>(this.loginUrl, usereq).pipe(
       tap((user) => {
-        this.user = user;
+        user ? (this.user = user) : this.handleError;
       })
     );
   }
