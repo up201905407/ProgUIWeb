@@ -120,15 +120,15 @@ input {
 }
 
 .login-container {
-  align-self: flex-end; /* Align content to the right */
+  align-self: flex-end;
 }
 
 .category-container .btn-group {
-  display: flex; /* Display buttons in a row */
+  display: flex;
 }
 
-.toggle-category {
-  display: none; /* Hide the "Categories" button by default */
+.mobile-navigation {
+  display: none;
 }
 
 @media (max-width: 990px) {
@@ -140,7 +140,7 @@ input {
     display: none;
   }
 
-  .toggle-category {
+  .mobile-navigation {
     display: block;
   }
 }

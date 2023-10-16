@@ -61,7 +61,7 @@
               placeholder="Search Here"
             />
           </div>
-          <button class="btn toggle-category btn-primary" (click)="toggleCategories()">
+          <button class="btn mobile-navigation btn-primary" (click)="openMobileNavigation()">
             Navigation
             <select *ngIf="showCategories" [(ngModel)]="selectedCategory" (ngModelChange)="selectCategory($event)">
               <option value="All">All</option>
@@ -77,6 +77,13 @@
               [(ngModel)]="filterText"
               placeholder="Search Here"
             />
+            <button
+              *ngIf="showCategories"
+              class="close-button"
+              (click)="closeMobileNavigation($event)"
+            >
+              Hide
+            </button>
           </button>
         </div>
         <div *ngIf="isLoading; else content">

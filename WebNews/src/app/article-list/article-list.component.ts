@@ -62,7 +62,12 @@ export class ArticleListComponent implements OnInit {
     }
   }
 
-  toggleCategories() {
+  openMobileNavigation() {
     this.showCategories = true;
+  }
+
+  closeMobileNavigation(event: Event) {
+    event.stopPropagation();
+    this.showCategories = false;
   }
 }
