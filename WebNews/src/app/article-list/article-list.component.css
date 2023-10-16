@@ -2,6 +2,24 @@ ul li {
   list-style-type: none;
 }
 
+.title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+  text-decoration: underline;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #555;
+}
+
+#editBtn,#removeBtn{
+  margin:2px
+}
 .listImg {
   margin-bottom: 10px;
   display: block;

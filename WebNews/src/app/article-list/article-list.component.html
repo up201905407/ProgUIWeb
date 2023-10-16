@@ -1,6 +1,7 @@
 <div class="container-fluid">
   <div class="container">
-    <h1>EIT-Newspaper</h1>
+    <div class="title">New Nifty News</div>
+    <div class="subtitle">the <i>fastest</i> news for <b>you!</b></div>
     <!-- Login Component -->
     <div class="login-container">
       <app-login></app-login>
@@ -115,10 +116,10 @@
                   <div class="listSubtitle">{{ article.subtitle }}</div>
                   <div class="listAbstract" [innerHTML]="removeSanitizing(article.abstract)"></div>
                   <div *ngIf="loggedIn">
-                    <button type="button" class="btn btn-primary" [routerLink]="['/article-edition', article.id]">
+                    <button type="button" class="btn btn-primary" id="editBtn"[routerLink]="['/article-edition', article.id]">
                       Edit
                     </button>
-                    <button type="button" class="btn btn-primary" (click)="removeArticle(article.id)">
+                    <button type="button" class="btn btn-primary" id="removeBtn"(click)="removeArticle(article.id)">
                       Remove
                     </button>
                   </div>

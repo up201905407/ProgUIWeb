@@ -3,12 +3,13 @@
   <div *ngIf="loggedIn; else guest">
     Hello
     <p class="fw-bold">{{ this.user?.username }}</p>
-    <button type="button" class="btn btn-primary" (click)="logout()">
+    <button type="button" class="btn btn-primary" id="logoutBtn" (click)="logout()">
       Logout
     </button>
     <button
       type="button"
       class="btn btn-primary"
+      id="createArticleBtn"
       [routerLink]="['/article-edition']"
     >
       Create Article
