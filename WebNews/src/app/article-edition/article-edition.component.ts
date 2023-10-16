@@ -1,20 +1,13 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Article } from '../interfaces/article';
-import * as _ from 'lodash';
-import { NewsService } from '../services/news.service';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Alert } from '../interfaces/alert';
-import { LoginService } from '../services/login.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { toJSDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-calendar';
+import { ActivatedRoute, Router } from '@angular/router';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import * as _ from 'lodash';
+import { Alert } from '../interfaces/alert';
+import { Article } from '../interfaces/article';
+import { LoginService } from '../services/login.service';
+import { NewsService } from '../services/news.service';
 
 @Component({
   selector: 'app-article-edition',

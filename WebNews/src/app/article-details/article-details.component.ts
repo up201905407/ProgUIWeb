@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { Article } from '../interfaces/article';
-import { ActivatedRoute } from '@angular/router';
-import { NewsService } from '../services/news.service';
-import { Alert } from '../interfaces/alert';
-import { Router } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Alert } from '../interfaces/alert';
+import { Article } from '../interfaces/article';
+import { NewsService } from '../services/news.service';
 
 @Component({
   selector: 'app-article-details',
@@ -40,7 +39,7 @@ export class ArticleDetailsComponent {
         (error) => {
           this.showError('Please provide a valid article id');
         },
-        ()=>{
+        () => {
           this.updateAbstractHtmlContent();
           this.updateBodyHtmlContent();
         }
@@ -49,11 +48,15 @@ export class ArticleDetailsComponent {
   }
 
   updateAbstractHtmlContent() {
-    this.abstractHtmlContent = this.sanitizer.bypassSecurityTrustHtml(this.article.abstract);
+    this.abstractHtmlContent = this.sanitizer.bypassSecurityTrustHtml(
+      this.article.abstract
+    );
   }
 
   updateBodyHtmlContent() {
-    this.bodyHtmlContent = this.sanitizer.bypassSecurityTrustHtml(this.article.body);
+    this.bodyHtmlContent = this.sanitizer.bypassSecurityTrustHtml(
+      this.article.body
+    );
   }
 
   // Alerts
