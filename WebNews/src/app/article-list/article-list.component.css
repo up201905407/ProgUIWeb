@@ -113,7 +113,7 @@ input {
   display: none; /* Hide the "Categories" button by default */
 }
 
-@media (max-width: 768px) {
+@media (max-width: 990px) {
   .category-container .btn-group {
     display: none;
   }
