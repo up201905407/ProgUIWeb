@@ -31,8 +31,9 @@ export class LoginService {
 
     return this.http.post<User>(this.loginUrl, usereq).pipe(
       tap((user) => {
-        user ? (this.user = user) : this.handleError;
+        this.user = user;
       })
+      // catchError(this.handleError<User>('login'))
     );
   }
 

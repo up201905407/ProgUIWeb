@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Alert } from '../interfaces/alert';
 import { User } from '../interfaces/user';
@@ -20,7 +19,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loggedIn = false;
+    this.loggedIn = this.loginService.isLogged();
     this.user = this.loginService.getUser();
   }
 
@@ -32,40 +31,23 @@ export class LoginComponent implements OnInit {
   login() {
     try {
       this.loginService.login(this.username, this.password).subscribe({
-        next: (response) => {
-          if (response.user) {
-            this.newsService.setUserApiKey(response.apikey);
-            this.user = response;
+        next: (user) => {
+          if (user != undefined) {
+            console.log('Login successful!');
+            this.user = user;
             this.loggedIn = true;
             this.showSuccess();
           } else {
             this.showError('Login not successful');
+            this.username = '';
+            this.password = '';
           }
         },
-        error: (err: any) => {
-          if (err instanceof HttpErrorResponse) {
-            if (err.status === 401) {
-              // Handle unauthorized (401) error
-              this.showError(
-                'Unauthorized access. Please check your credentials.'
-              );
-            } else if (err.status === 403) {
-              // Handle forbidden (403) error
-              this.showError(
-                'Access forbidden. You do not have permission to access this resource.'
-              );
-            } else {
-              // Handle other error status codes
-              this.showError(
-                'An error occurred during login. Please try again later.'
-              );
-            }
-          } else {
-            // Handle non-HTTP errors
-            console.error(err);
-            this.showError('Login not successful');
-          }
+        error: (err) => {
+          console.log('HTTP Error', err);
+          this.showError('Login not successful');
         },
+        complete: () => console.log('HTTP request completed.'),
       });
     } catch (error) {
       console.error(error);
