@@ -19,7 +19,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loggedIn = this.loginService.isLogged();
+    this.loginService.isLoggedIn$.subscribe((state) => {
+      this.loggedIn = state;
+    });
     this.user = this.loginService.getUser();
   }
 
@@ -34,7 +36,7 @@ export class LoginComponent implements OnInit {
         next: (user) => {
           if (user != undefined) {
             this.showSuccess();
-            this.loggedIn = true;
+            this.loginService.logged.next(true);
             this.user = user;
             this.newsService.setUserApiKey(user.apikey);
           } else {
@@ -60,7 +62,7 @@ export class LoginComponent implements OnInit {
       this.username = '';
       this.password = '';
       this.loginService.logout();
-      this.loggedIn = false;
+      this.loginService.logged.next(false);
       this.newsService.setAnonymousApiKey();
     } catch (error) {
       console.log(error);

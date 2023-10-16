@@ -26,9 +26,9 @@ export class ArticleListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getArticleList();
-    // this.loginService.isLoggedIn$.subscribe((state) => {
-    //   this.loggedIn = state;
-    // });
+    this.loginService.isLoggedIn$.subscribe((state) => {
+      this.loggedIn = state;
+    });
   }
 
   // The service capture the error and the controller ignores it

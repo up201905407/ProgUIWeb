@@ -9,7 +9,7 @@ import { User } from '../interfaces/user';
 })
 export class LoginService {
   private user: User | undefined;
-  private logged = new BehaviorSubject<boolean>(false);
+  logged = new BehaviorSubject<boolean>(false);
   isLoggedIn$: Observable<boolean> = this.logged.asObservable();
 
   private loginUrl = 'http://sanger.dia.fi.upm.es/pui-rest-news/login';
