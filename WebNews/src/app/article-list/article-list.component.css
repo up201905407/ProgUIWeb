@@ -104,3 +104,25 @@ input {
 .login-container {
   align-self: flex-end; /* Align content to the right */
 }
+
+.category-container .btn-group {
+  display: flex; /* Display buttons in a row */
+}
+
+.toggle-category {
+  display: none; /* Hide the "Categories" button by default */
+}
+
+@media (max-width: 768px) {
+  .category-container .btn-group {
+    display: none;
+  }
+
+  .search-bar {
+    display: none;
+  }
+
+  .toggle-category {
+    display: block;
+  }
+}

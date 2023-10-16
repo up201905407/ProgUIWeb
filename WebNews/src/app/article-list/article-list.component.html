@@ -60,6 +60,23 @@
               placeholder="Search Here"
             />
           </div>
+          <button class="btn toggle-category btn-primary" (click)="toggleCategories()">
+            Navigation
+            <select *ngIf="showCategories" [(ngModel)]="selectedCategory" (ngModelChange)="selectCategory($event)">
+              <option value="All">All</option>
+              <option value="National">National</option>
+              <option value="Economy">Economy</option>
+              <option value="Sports">Sports</option>
+              <option value="Technology">Technology</option>
+            </select>
+            <input
+              *ngIf="showCategories"
+              type="text"
+              id="filterText"
+              [(ngModel)]="filterText"
+              placeholder="Search Here"
+            />
+          </button>
         </div>
         <div *ngIf="isLoading; else content">
           <app-loading-spinner />

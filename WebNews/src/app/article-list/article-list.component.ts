@@ -16,6 +16,7 @@ export class ArticleListComponent implements OnInit {
   filterText: string = '';
   loggedIn: boolean = false;
   search: string = '';
+  showCategories = false;
 
   constructor(
     private newsService: NewsService,
@@ -59,5 +60,9 @@ export class ArticleListComponent implements OnInit {
         }
       );
     }
+  }
+
+  toggleCategories() {
+    this.showCategories = true;
   }
 }
