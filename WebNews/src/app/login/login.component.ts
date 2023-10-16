@@ -1,8 +1,9 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
-import { LoginService } from '../services/login.service';
-import { User } from '../interfaces/user';
-import { NewsService } from '../services/news.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { Alert } from '../interfaces/alert';
+import { User } from '../interfaces/user';
+import { LoginService } from '../services/login.service';
+import { NewsService } from '../services/news.service';
 
 @Component({
   selector: 'app-login',
@@ -38,14 +39,32 @@ export class LoginComponent implements OnInit {
             this.loggedIn = true;
             this.showSuccess();
           } else {
-            // Handle other status codes if needed
             this.showError('Login not successful');
           }
         },
-        error: (error) => {
-          // Handle error response from the server
-          console.error(error);
-          this.showError('Login not successful');
+        error: (err: any) => {
+          if (err instanceof HttpErrorResponse) {
+            if (err.status === 401) {
+              // Handle unauthorized (401) error
+              this.showError(
+                'Unauthorized access. Please check your credentials.'
+              );
+            } else if (err.status === 403) {
+              // Handle forbidden (403) error
+              this.showError(
+                'Access forbidden. You do not have permission to access this resource.'
+              );
+            } else {
+              // Handle other error status codes
+              this.showError(
+                'An error occurred during login. Please try again later.'
+              );
+            }
+          } else {
+            // Handle non-HTTP errors
+            console.error(err);
+            this.showError('Login not successful');
+          }
         },
       });
     } catch (error) {

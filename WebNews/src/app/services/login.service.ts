@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { User } from '../interfaces/user';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { User } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root',
