@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NewsService } from '../services/news.service';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Article } from '../interfaces/article';
 import { LoginService } from '../services/login.service';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { NewsService } from '../services/news.service';
 
 @Component({
   selector: 'app-article-list',
@@ -26,7 +26,7 @@ export class ArticleListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getArticleList();
-    this.loginService.isLogged$.subscribe((state) => {
+    this.loginService.isLoggedIn$.subscribe((state) => {
       this.loggedIn = state;
     });
   }
@@ -42,7 +42,7 @@ export class ArticleListComponent implements OnInit {
   selectCategory(category: string): void {
     this.selectedCategory = category;
   }
-  removeSanitizing(content:string){ 
+  removeSanitizing(content: string) {
     return this.sanitizer.bypassSecurityTrustHtml(content);
   }
 

@@ -10,7 +10,7 @@ import { User } from '../interfaces/user';
 export class LoginService {
   private user: User | undefined;
   private logged = new BehaviorSubject<boolean>(false);
-  isLogged$ = this.logged.asObservable();
+  isLoggedIn$: Observable<boolean> = this.logged.asObservable();
 
   private loginUrl = 'http://sanger.dia.fi.upm.es/pui-rest-news/login';
 
@@ -33,7 +33,6 @@ export class LoginService {
       tap((user) => {
         this.user = user;
       })
-      // catchError(this.handleError<User>('login'))
     );
   }
 

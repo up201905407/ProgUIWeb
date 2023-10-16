@@ -33,10 +33,10 @@ export class LoginComponent implements OnInit {
       this.loginService.login(this.username, this.password).subscribe({
         next: (user) => {
           if (user != undefined) {
-            console.log('Login successful!');
-            this.user = user;
-            this.loggedIn = true;
             this.showSuccess();
+            this.loggedIn = true;
+            this.user = user;
+            this.newsService.setUserApiKey(user.apikey);
           } else {
             this.showError('Login not successful');
             this.username = '';
@@ -56,11 +56,15 @@ export class LoginComponent implements OnInit {
   }
 
   logout() {
-    this.username = '';
-    this.password = '';
-    this.loginService.logout();
-    this.loggedIn = false;
-    this.newsService.setAnonymousApiKey();
+    try {
+      this.username = '';
+      this.password = '';
+      this.loginService.logout();
+      this.loggedIn = false;
+      this.newsService.setAnonymousApiKey();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   // Alerts
