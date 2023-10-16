@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NewsService } from '../services/news.service';
 import { Article } from '../interfaces/article';
 import { LoginService } from '../services/login.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-article-list',
@@ -18,7 +19,8 @@ export class ArticleListComponent implements OnInit {
 
   constructor(
     private newsService: NewsService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +40,9 @@ export class ArticleListComponent implements OnInit {
 
   selectCategory(category: string): void {
     this.selectedCategory = category;
+  }
+  removeSanitizing(content:string){ 
+    return this.sanitizer.bypassSecurityTrustHtml(content);
   }
 
   removeArticle(id: number | undefined) {
