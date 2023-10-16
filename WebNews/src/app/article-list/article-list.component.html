@@ -2,57 +2,65 @@
   <div class="container">
     <h1>EIT-Newspaper</h1>
     <!-- Login Component -->
-    <app-login />
+    <div class="login-container">
+      <app-login></app-login>
+    </div>
     <div class="header">
       <div class="container mt-5">
-        <div class="btn-group" role="group">
-          <button
-            type="button"
-            class="btn"
-            [ngClass]="{ active: selectedCategory === 'All' }"
-            (click)="selectCategory('All')"
-          >
-            All
-          </button>
-          <button
-            type="button"
-            class="btn"
-            [ngClass]="{ active: selectedCategory === 'National' }"
-            (click)="selectCategory('National')"
-          >
-            National
-          </button>
-          <button
-            type="button"
-            class="btn"
-            [ngClass]="{ active: selectedCategory === 'Economy' }"
-            (click)="selectCategory('Economy')"
-          >
-            Economy
-          </button>
-          <button
-            type="button"
-            class="btn"
-            [ngClass]="{ active: selectedCategory === 'Sports' }"
-            (click)="selectCategory('Sports')"
-          >
-            Sports
-          </button>
-          <button
-            type="button"
-            class="btn"
-            [ngClass]="{ active: selectedCategory === 'Technology' }"
-            (click)="selectCategory('Technology')"
-          >
-            Technology
-          </button>
+        <div class="header-content">
+          <div class="category-container">
+            <div class="btn-group" role="group">
+              <button
+                type="button"
+                class="btn"
+                [ngClass]="{ active: selectedCategory === 'All', 'selectedCategory': selectedCategory === 'All' }"
+                (click)="selectCategory('All')"
+              >
+                All
+              </button>
+              <button
+                type="button"
+                class="btn"
+                [ngClass]="{ active: selectedCategory === 'National', 'selectedCategory': selectedCategory === 'National' }"
+                (click)="selectCategory('National')"
+              >
+                National
+              </button>
+              <button
+                type="button"
+                class="btn"
+                [ngClass]="{ active: selectedCategory === 'Economy', 'selectedCategory': selectedCategory === 'Economy' }"
+                (click)="selectCategory('Economy')"
+              >
+                Economy
+              </button>
+              <button
+                type="button"
+                class="btn"
+                [ngClass]="{ active: selectedCategory === 'Sports', 'selectedCategory': selectedCategory === 'Sports' }"
+                (click)="selectCategory('Sports')"
+              >
+                Sports
+              </button>
+              <button
+                type="button"
+                class="btn"
+                [ngClass]="{ active: selectedCategory === 'Technology', 'selectedCategory': selectedCategory === 'Technology' }"
+                (click)="selectCategory('Technology')"
+              >
+                Technology
+              </button>
+            </div>
+          </div>
+          <div class="search-bar">
+            <input
+              type="text"
+              id="filterText"
+              [(ngModel)]="filterText"
+              placeholder="Search Here"
+            />
+          </div>
         </div>
-        <input
-          type="text"
-          id="filterText"
-          [(ngModel)]="filterText"
-          placeholder="Search Here"
-        />
         <div *ngIf="isLoading; else content">
           <app-loading-spinner />
         </div>
@@ -67,67 +75,43 @@
             *ngIf="articleList.length > 0; else emptyList"
           >
             <div class="row">
-              <ul
-                *ngFor="
-                  let article of articleList
-                    | filterArticles : filterText : selectedCategory
-                "
-                class="ulBox"
+              <div
+                *ngFor="let article of articleList | filterArticles : filterText : selectedCategory"
+                class="article-box"
               >
-                <li>
-                  <a class="listImg" [routerLink]="['/article', article.id]"
-                    ><img
-                      *ngIf="
-                        article.thumbnail_media_type && article.thumbnail_image
-                      "
-                      [src]="
-                        'data:' +
-                        article.thumbnail_media_type +
-                        ';base64,' +
-                        article.thumbnail_image
-                      " />
-                    <img
-                      class="listImg"
-                      [hidden]="
-                        article.thumbnail_media_type && article.thumbnail_image
-                      "
-                      src="../../assets/no_pic.png"
-                  /></a>
-                </li>
-                <li>
-                  <a
-                    class="listTitle"
-                    [routerLink]="['/article', article.id]"
-                    >{{ article.title }}</a
-                  >
-                </li>
-                <li class="listCategory">{{ article.category }}</li>
-                <li class="listSubtitle">{{ article.subtitle }}</li>
-                <li class="listAbstract">{{ article.abstract }}</li>
-                <div *ngIf="loggedIn">
-                  <li class="listAbstract">
-                    <button
-                      type="button"
-                      class="btn btn-primary"
-                      [routerLink]="['/article-edition', article.id]"
-                    >
+                <div class="article-content">
+                  <a class="listImg" [routerLink]="['/article', article.id]">
+                    <div class="image-container">
+                      <img
+                        *ngIf="article.thumbnail_media_type && article.thumbnail_image"
+                        [src]="'data:' + article.thumbnail_media_type + ';base64,' + article.thumbnail_image"
+                      />
+                      <img
+                        class="listImg"
+                        [hidden]="article.thumbnail_media_type && article.thumbnail_image"
+                        src="../../assets/no_pic.png"
+                      />
+                    </div>
+                  </a>
+                  <a class="listTitle" [routerLink]="['/article', article.id]">{{ article.title }}</a>
+                  <div class="listCategory">{{ article.category }}</div>
+                  <div class="listSubtitle">{{ article.subtitle }}</div>
+                  <div class="listAbstract">{{ article.abstract }}</div>
+                  <div *ngIf="loggedIn">
+                    <button type="button" class="btn btn-primary" [routerLink]="['/article-edition', article.id]">
                       Edit
                     </button>
-                    <button
-                      type="button"
-                      class="btn btn-primary"
-                      (click)="removeArticle(article.id)"
-                    >
+                    <button type="button" class="btn btn-primary" (click)="removeArticle(article.id)">
                       Remove
                     </button>
-                  </li>
+                  </div>
                 </div>
-              </ul>
+              </div>
             </div>
-          </div>
-          <ng-template #emptyList>
-            <div class="noData">No articles for the current filters.</div>
-          </ng-template>
+          </div>     
+        <ng-template #emptyList>
+          <div class="noData">No articles for the current filters.</div>
+        </ng-template>
         </ng-template>
       </div>
     </div>
