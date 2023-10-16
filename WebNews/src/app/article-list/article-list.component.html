@@ -64,8 +64,16 @@
         <div *ngIf="isLoading; else content">
           <app-loading-spinner />
         </div>
-        <ng-template #content>
-          <div class="container text-center">
+        <ng-template
+          #content
+          [(ngModel)]="articleList"
+          name="articleList"
+          ngDefaultControl
+        >
+          <div
+            class="container text-center"
+            *ngIf="articleList.length > 0; else emptyList"
+          >
             <div class="row">
               <div
                 *ngFor="let article of articleList | filterArticles : filterText : selectedCategory"

@@ -40,7 +40,19 @@ export class ArticleListComponent implements OnInit {
     this.selectedCategory = category;
   }
 
-  removeArticle(id: number) {
-    this.newsService.deleteArticle(id);
+  removeArticle(id: number | undefined) {
+    console.log('remove article');
+    console.log(id);
+    if (id != undefined) {
+      this.newsService.deleteArticle(id).subscribe(
+        (resp) => {
+          console.log(resp);
+          this.getArticleList();
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   }
 }

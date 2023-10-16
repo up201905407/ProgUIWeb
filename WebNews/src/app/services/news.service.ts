@@ -57,9 +57,8 @@ export class NewsService {
     return this.http.get<Article[]>(this.newsUrl, this.httpOptions);
   }
 
-  deleteArticle(article: Article | number): Observable<Article> {
-    const id = typeof article === 'number' ? article : article.id;
-    const url = `${this.articleUrl}/${id}`;
+  deleteArticle(article_id: number): Observable<Article> {
+    const url = `${this.articleUrl}/${article_id}`;
     return this.http.delete<Article>(url, this.httpOptions);
   }
 
@@ -75,8 +74,6 @@ export class NewsService {
   }
 
   createArticle(article: Article): Observable<Article> {
-    console.log('Creating article');
-    console.log(article);
     return this.http.post<Article>(this.articleUrl, article, this.httpOptions);
   }
 }

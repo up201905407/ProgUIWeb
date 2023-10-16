@@ -1,4 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Article } from '../interfaces/article';
 import * as _ from 'lodash';
@@ -6,6 +12,9 @@ import { NewsService } from '../services/news.service';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alert } from '../interfaces/alert';
+import { LoginService } from '../services/login.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { toJSDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-calendar';
 
 @Component({
   selector: 'app-article-edition',
@@ -24,16 +33,19 @@ export class ArticleEditionComponent {
   idGiven: boolean = false;
   isLoading = true;
   public Editor = ClassicEditor;
+  bodyHtmlContent!: SafeHtml;
+  abstractHtmlContent!: SafeHtml;
 
   @ViewChild('articleForm') articleForm!: NgForm;
 
   constructor(
+    private loginService: LoginService,
     private newsService: NewsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private sanitizer: DomSanitizer
   ) {
     this.article = {
-      id: 0,
       id_user: 0,
       abstract: '',
       subtitle: '',
@@ -64,10 +76,29 @@ export class ArticleEditionComponent {
         },
         (error) => {
           this.showError('Please provide a valid article id');
+        },
+        () => {
+          this.updateAbstractHtmlContent();
+          this.updateBodyHtmlContent();
         }
       );
+    } else {
+      this.isLoading = false;
     }
   }
+
+  updateAbstractHtmlContent() {
+    this.abstractHtmlContent = this.sanitizer.bypassSecurityTrustHtml(
+      this.article.abstract
+    );
+  }
+
+  updateBodyHtmlContent() {
+    this.bodyHtmlContent = this.sanitizer.bypassSecurityTrustHtml(
+      this.article.body
+    );
+  }
+
   getArticleList() {
     this.newsService.getArticles().subscribe((list) => {
       this.articleList = list;
@@ -133,16 +164,6 @@ export class ArticleEditionComponent {
     return true;
   }
 
-  //Find the smallest available id
-  getNextAvailableId(): number {
-    const usedIds = new Set(this.articleList.map((article) => article.id));
-    let id = 1;
-    while (usedIds.has(id)) {
-      id++;
-    }
-    return id;
-  }
-
   save(): void {
     this.article.update_date = this.getCurrentDateTime();
     // Update article
@@ -158,10 +179,12 @@ export class ArticleEditionComponent {
     }
     // New article
     else {
-      // check for a unique id
-      this.article.id = this.getNextAvailableId();
-      //TODO: Update article with current username
-      this.article.username = 'placeholder_name';
+      if (this.loginService.getUser()) {
+        let user = this.loginService.getUser();
+        if (user !== undefined) {
+          this.article.username = user.username;
+        }
+      }
       this.newsService.createArticle(this.article).subscribe(
         (article) => {
           this.showSuccess();
@@ -186,7 +209,7 @@ export class ArticleEditionComponent {
 
   // Back to main page
   navigateToArticleList() {
-    this.router.navigate(['/article-list']); // Replace '/article-list' with the actual route of your "article-list" page
+    this.router.navigate(['/article-list']);
   }
 
   getCurrentDateTime(): string {
