@@ -21,7 +21,7 @@
                         <img [src]="'data:' + article.image_media_type + ';base64,' +article.image_data "
                             *ngIf="article.image_data">
                         <div class="abstract" [innerHTML]="abstractHtmlContent"></div>
-                        <div [innerHTML]="bodyHtmlContent"></div>
+                        <div class="body" [innerHTML]="bodyHtmlContent"></div>
 
                         <div class="text-muted mt-3">
                             <small>{{ article.username }}</small><br>

@@ -159,6 +159,12 @@ export class ArticleEditionComponent {
 
   save(): void {
     this.article.update_date = this.getCurrentDateTime();
+    if (this.loginService.getUser()) {
+      let user = this.loginService.getUser();
+      if (user !== undefined) {
+        this.article.username = user.username;
+      }
+    }
     // Update article
     if (this.idGiven) {
       this.newsService.updateArticle(this.article).subscribe(
@@ -172,12 +178,6 @@ export class ArticleEditionComponent {
     }
     // New article
     else {
-      if (this.loginService.getUser()) {
-        let user = this.loginService.getUser();
-        if (user !== undefined) {
-          this.article.username = user.username;
-        }
-      }
       this.newsService.createArticle(this.article).subscribe(
         (article) => {
           this.showSuccess();

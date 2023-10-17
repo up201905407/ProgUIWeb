@@ -47,6 +47,9 @@
     color: #777;
     font-style: italic;
 }
+.body{
+    text-align: center;
+}
 
 /* Footer */
 .text-muted {
