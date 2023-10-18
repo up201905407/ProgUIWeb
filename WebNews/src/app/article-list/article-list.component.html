@@ -1,247 +1,230 @@
 <div class="container-fluid">
-  <div class="container">
-    <div class="title">New Nifty News</div>
-    <div class="subtitle">the <i>fastest</i> news for <b>you!</b></div>
-    <!-- Login Component -->
-    <div class="login-container">
-      <app-login></app-login>
-    </div>
-    <div class="header">
-      <div class="container mt-5">
-        <div class="header-content">
-          <div class="category-container">
-            <div class="btn-group" role="group">
-              <button
-                type="button"
-                class="btn"
-                [ngClass]="{
-                  active: selectedCategory === 'All',
-                  selectedCategory: selectedCategory === 'All'
-                }"
-                (click)="selectCategory('All')"
-              >
-                All
-              </button>
-              <button
-                type="button"
-                class="btn"
-                [ngClass]="{
-                  active: selectedCategory === 'National',
-                  selectedCategory: selectedCategory === 'National'
-                }"
-                (click)="selectCategory('National')"
-              >
-                National
-              </button>
-              <button
-                type="button"
-                class="btn"
-                [ngClass]="{
-                  active: selectedCategory === 'Economy',
-                  selectedCategory: selectedCategory === 'Economy'
-                }"
-                (click)="selectCategory('Economy')"
-              >
-                Economy
-              </button>
-              <button
-                type="button"
-                class="btn"
-                [ngClass]="{
-                  active: selectedCategory === 'Sports',
-                  selectedCategory: selectedCategory === 'Sports'
-                }"
-                (click)="selectCategory('Sports')"
-              >
-                Sports
-              </button>
-              <button
-                type="button"
-                class="btn"
-                [ngClass]="{
-                  active: selectedCategory === 'Technology',
-                  selectedCategory: selectedCategory === 'Technology'
-                }"
-                (click)="selectCategory('Technology')"
-              >
-                Technology
-              </button>
-            </div>
-          </div>
-          <div class="search-bar">
-            <input
-              type="text"
-              id="filterText"
-              [(ngModel)]="filterText"
-              placeholder="Search Here"
-            />
-          </div>
+  <div class="title">New Nifty News</div>
+  <div class="subtitle">the <i>fastest</i> news for <b>you!</b></div>
+  <!-- Login Component -->
+  <div class="login-container">
+    <app-login></app-login>
+  </div>
+  <div class="header">
+    <div class="header-content">
+      <div class="category-container">
+        <div class="btn-group" role="group">
           <button
-            class="btn mobile-navigation btn-primary"
-            (click)="openMobileNavigation()"
+            type="button"
+            class="btn"
+            [ngClass]="{
+              active: selectedCategory === 'All',
+              selectedCategory: selectedCategory === 'All'
+            }"
+            (click)="selectCategory('All')"
           >
-            Navigation
-            <select
-              *ngIf="showCategories"
-              [(ngModel)]="selectedCategory"
-              (ngModelChange)="selectCategory($event)"
-            >
-              <option value="All">All</option>
-              <option value="National">National</option>
-              <option value="Economy">Economy</option>
-              <option value="Sports">Sports</option>
-              <option value="Technology">Technology</option>
-            </select>
-            <input
-              *ngIf="showCategories"
-              type="text"
-              id="filterText"
-              [(ngModel)]="filterText"
-              placeholder="Search Here"
-            />
-            <button
-              *ngIf="showCategories"
-              class="close-button"
-              (click)="closeMobileNavigation($event)"
-            >
-              Hide
-            </button>
+            All
+          </button>
+          <button
+            type="button"
+            class="btn"
+            [ngClass]="{
+              active: selectedCategory === 'National',
+              selectedCategory: selectedCategory === 'National'
+            }"
+            (click)="selectCategory('National')"
+          >
+            National
+          </button>
+          <button
+            type="button"
+            class="btn"
+            [ngClass]="{
+              active: selectedCategory === 'Economy',
+              selectedCategory: selectedCategory === 'Economy'
+            }"
+            (click)="selectCategory('Economy')"
+          >
+            Economy
+          </button>
+          <button
+            type="button"
+            class="btn"
+            [ngClass]="{
+              active: selectedCategory === 'Sports',
+              selectedCategory: selectedCategory === 'Sports'
+            }"
+            (click)="selectCategory('Sports')"
+          >
+            Sports
+          </button>
+          <button
+            type="button"
+            class="btn"
+            [ngClass]="{
+              active: selectedCategory === 'Technology',
+              selectedCategory: selectedCategory === 'Technology'
+            }"
+            (click)="selectCategory('Technology')"
+          >
+            Technology
           </button>
         </div>
-        <div *ngIf="isLoading; else content">
-          <app-loading-spinner />
-        </div>
-        <ng-template
-          #content
-          [(ngModel)]="articleList"
-          name="articleList"
-          ngDefaultControl
+      </div>
+      <div class="search-bar">
+        <input
+          type="text"
+          id="filterText"
+          [(ngModel)]="filterText"
+          placeholder="Search Here"
+        />
+      </div>
+      <button
+        class="btn mobile-navigation btn-primary"
+        (click)="openMobileNavigation()"
+      >
+        Navigation
+        <select
+          *ngIf="showCategories"
+          [(ngModel)]="selectedCategory"
+          (ngModelChange)="selectCategory($event)"
         >
+          <option value="All">All</option>
+          <option value="National">National</option>
+          <option value="Economy">Economy</option>
+          <option value="Sports">Sports</option>
+          <option value="Technology">Technology</option>
+        </select>
+        <input
+          *ngIf="showCategories"
+          type="text"
+          id="filterText"
+          [(ngModel)]="filterText"
+          placeholder="Search Here"
+        />
+        <button
+          *ngIf="showCategories"
+          class="close-button"
+          (click)="closeMobileNavigation($event)"
+        >
+          Hide
+        </button>
+      </button>
+    </div>
+  </div>
+</div>
+<div *ngIf="isLoading; else content">
+  <app-loading-spinner />
+</div>
+<ng-template
+  #content
+  [(ngModel)]="articleList"
+  name="articleList"
+  ngDefaultControl
+>
+  <div class="container" *ngIf="articleList.length > 0; else emptyList">
+    <div class="basic-grid">
+      <div
+        *ngFor="
+          let article of articleList
+            | filterArticles : filterText : selectedCategory
+        "
+        class="article-box"
+      >
+        <div class="image-container">
+          <a class="fill" [routerLink]="['/article', article.id]">
+            <img
+              *ngIf="article.thumbnail_media_type && article.thumbnail_image"
+              [src]="
+                'data:' +
+                article.thumbnail_media_type +
+                ';base64,' +
+                article.thumbnail_image
+              "
+            />
+            <img
+              class="listImg"
+              [hidden]="article.thumbnail_media_type && article.thumbnail_image"
+              src="../../assets/no_pic.png"
+            />
+          </a>
+        </div>
+        <div class="article-data">
+          <a class="listTitle" [routerLink]="['/article', article.id]">{{
+            article.title
+          }}</a>
+          <div class="listCategory">{{ article.category }}</div>
+          <div class="listSubtitle">{{ article.subtitle }}</div>
           <div
-            class="container text-center"
-            *ngIf="articleList.length > 0; else emptyList"
-          >
-            <div class="row">
-              <div
-                *ngFor="
-                  let article of articleList
-                    | filterArticles : filterText : selectedCategory
-                "
-                class="article-box"
-              >
-                <div class="article-content">
-                  <a class="listImg" [routerLink]="['/article', article.id]">
-                    <div class="image-container">
-                      <img
-                        *ngIf="
-                          article.thumbnail_media_type &&
-                          article.thumbnail_image
-                        "
-                        [src]="
-                          'data:' +
-                          article.thumbnail_media_type +
-                          ';base64,' +
-                          article.thumbnail_image
-                        "
-                      />
-                      <img
-                        class="listImg"
-                        [hidden]="
-                          article.thumbnail_media_type &&
-                          article.thumbnail_image
-                        "
-                        src="../../assets/no_pic.png"
-                      />
-                    </div>
-                  </a>
-                  <a
-                    class="listTitle"
-                    [routerLink]="['/article', article.id]"
-                    >{{ article.title }}</a
-                  >
-                  <div class="listCategory">{{ article.category }}</div>
-                  <div class="listSubtitle">{{ article.subtitle }}</div>
-                  <div
-                    class="listAbstract"
-                    [innerHTML]="removeSanitizing(article.abstract)"
-                  ></div>
-                  <div *ngIf="loggedIn">
+            class="listAbstract"
+            [innerHTML]="removeSanitizing(article.abstract)"
+          ></div>
+        </div>
+        <div>
+          <div *ngIf="loggedIn">
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="editBtn"
+              [routerLink]="['/article-edition', article.id]"
+            >
+              Edit
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="removeBtn"
+              data-bs-toggle="modal"
+              data-bs-target="#removalModal"
+            >
+              Remove
+            </button>
+            <!-- Modal -->
+            <div
+              class="modal fade"
+              id="removalModal"
+              tabindex="-1"
+              aria-labelledby="removalModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header text-center">
+                    <h5 class="modal-title" id="removalModalLabel">
+                      Article removal
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    Are you sure that you want to remove the article from the
+                    website forever?
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Don't remove
+                    </button>
                     <button
                       type="button"
                       class="btn btn-primary"
-                      id="editBtn"
-                      [routerLink]="['/article-edition', article.id]"
-                    >
-                      Edit
-                    </button>
-                    <!-- <button type="button" class="btn btn-primary" id="removeBtn"(click)="removeArticle(article.id)">
-
-                      Remove
-                    </button> -->
-                    <button
-                      type="button"
-                      class="btn btn-primary"
-                      id="removeBtn"
-                      data-bs-toggle="modal"
-                      data-bs-target="#removalModal"
+                      data-bs-dismiss="modal"
+                      (click)="removeArticle(article.id)"
                     >
                       Remove
                     </button>
-                    <!-- Modal -->
-                    <div
-                      class="modal fade"
-                      id="removalModal"
-                      tabindex="-1"
-                      aria-labelledby="removalModalLabel"
-                      aria-hidden="true"
-                    >
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header text-center">
-                            <h5 class="modal-title" id="removalModalLabel">
-                              Article removal
-                            </h5>
-                            <button
-                              type="button"
-                              class="btn-close"
-                              data-bs-dismiss="modal"
-                              aria-label="Close"
-                            ></button>
-                          </div>
-                          <div class="modal-body">
-                            Are you sure that you want to remove the article
-                            from the website forever?
-                          </div>
-                          <div class="modal-footer">
-                            <button
-                              type="button"
-                              class="btn btn-secondary"
-                              data-bs-dismiss="modal"
-                            >
-                              Don't remove
-                            </button>
-                            <button
-                              type="button"
-                              class="btn btn-primary"
-                              data-bs-dismiss="modal"
-                              (click)="removeArticle(article.id)"
-                            >
-                              Remove
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <ng-template #emptyList>
-            <div class="noData">No articles for the current filters.</div>
-          </ng-template>
-        </ng-template>
+        </div>
       </div>
     </div>
   </div>
-</div>
+  <ng-template #emptyList>
+    <div class="noData">No articles for the current filters.</div>
+  </ng-template>
+</ng-template>
