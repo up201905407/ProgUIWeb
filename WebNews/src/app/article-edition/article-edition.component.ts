@@ -95,7 +95,6 @@ export class ArticleEditionComponent {
   getArticleList() {
     this.newsService.getArticles().subscribe((list) => {
       this.articleList = list;
-      console.log(list);
     });
   }
 

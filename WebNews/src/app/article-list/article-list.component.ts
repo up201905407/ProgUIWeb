@@ -47,11 +47,9 @@ export class ArticleListComponent implements OnInit {
   }
 
   removeArticle(id: number | undefined) {
-    console.log(id);
     if (id != undefined) {
       this.newsService.deleteArticle(id).subscribe({
         next: (resp) => {
-          console.log(resp);
           this.getArticleList();
         },
         error: (error) => {
