@@ -1,6 +1,11 @@
 <div class="container-fluid">
   <div class="title">New Nifty News</div>
   <div class="subtitle">the <i>fastest</i> news for <b>you!</b></div>
+  <p *ngFor="let alert of alerts">
+    <ngb-alert [type]="alert.type" (closed)="close(alert)">{{
+      alert.message
+    }}</ngb-alert>
+  </p>
   <!-- Login Component -->
   <div class="login-container">
     <app-login></app-login>

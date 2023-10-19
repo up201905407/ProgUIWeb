@@ -3,6 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Article } from '../interfaces/article';
 import { LoginService } from '../services/login.service';
 import { NewsService } from '../services/news.service';
+import { Alert } from '../interfaces/alert';
 
 @Component({
   selector: 'app-article-list',
@@ -17,12 +18,15 @@ export class ArticleListComponent implements OnInit {
   loggedIn: boolean = true;
   search: string = '';
   showCategories = false;
+  alerts!: Alert[];
 
   constructor(
     private newsService: NewsService,
     private loginService: LoginService,
     private sanitizer: DomSanitizer
-  ) {}
+  ) {
+    this.alerts = [];
+  }
 
   ngOnInit(): void {
     this.getArticleList();
@@ -51,6 +55,10 @@ export class ArticleListComponent implements OnInit {
       this.newsService.deleteArticle(id).subscribe({
         next: (resp) => {
           this.getArticleList();
+          this.alerts.push({
+            type: 'success',
+            message: 'Article removed successfully',
+          });
         },
         error: (error) => {
           console.log(error);
@@ -66,5 +74,12 @@ export class ArticleListComponent implements OnInit {
   closeMobileNavigation(event: Event) {
     event.stopPropagation();
     this.showCategories = false;
+  }
+
+  close(alert: Alert) {
+    const index = this.alerts.indexOf(alert);
+    if (index !== -1) {
+      this.alerts.splice(index, 1);
+    }
   }
 }
