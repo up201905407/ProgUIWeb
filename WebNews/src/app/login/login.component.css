@@ -2,10 +2,10 @@
   display: flex;
   flex-direction: row;
   gap: 10px;
-  justify-content: end;
   align-items: center;
   margin: 10px;
 }
-#logoutBtn,#createArticleBtn{
+#logoutBtn,
+#createArticleBtn {
   margin: 2px;
 }
