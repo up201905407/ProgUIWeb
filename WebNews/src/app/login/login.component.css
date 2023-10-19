@@ -6,3 +6,6 @@
   align-items: center;
   margin: 10px;
 }
+#logoutBtn,#createArticleBtn{
+  margin: 2px;
+}

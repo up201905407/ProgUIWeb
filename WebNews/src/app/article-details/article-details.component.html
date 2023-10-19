@@ -1,34 +1,51 @@
 <p *ngFor="let alert of alerts">
-    <ngb-alert [type]="alert.type" (closed)="close(alert)">{{ alert.message }}</ngb-alert>
+  <ngb-alert [type]="alert.type" (closed)="close(alert)">{{
+    alert.message
+  }}</ngb-alert>
 </p>
 
 <div class="loading-container" *ngIf="isLoading; else content">
-    <app-loading-spinner />
+  <app-loading-spinner />
 </div>
 
 <ng-template #content>
-    <button class="btn btn-secondary float-end" (click)="navigateToArticleList()">Homepage</button>
-
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="jumbotron">
-                    <div class="row justify-content-center">
-                        <div class="title">{{ article.title }}</div>
-                        <div class="subtitle">{{ article.subtitle }}</div>
-                        <div class="category">{{ article.category }}</div>
-                        <img [src]="'data:' + article.image_media_type + ';base64,' +article.image_data "
-                            *ngIf="article.image_data">
-                        <div class="abstract">{{ article.abstract }}</div>
-                        <div [innerHTML]="article.body"></div>
-
-                        <div class="text-muted mt-3">
-                            <small>{{ article.username }}</small><br>
-                            <small>{{ article.update_date }}</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="container mt-5">
+    <div class="col-md-1">
+      <button
+        class="btn btn-secondary"
+        id="homebutton"
+        (click)="navigateToArticleList()"
+      >
+        Home
+      </button>
     </div>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="jumbotron">
+          <div class="row justify-content-center">
+            <div class="title">{{ article.title }}</div>
+            <div class="subtitle">{{ article.subtitle }}</div>
+            <div class="category">{{ article.category }}</div>
+            <img
+              [src]="
+                'data:' +
+                article.image_media_type +
+                ';base64,' +
+                article.image_data
+              "
+              *ngIf="article.image_data"
+            />
+            <div class="abstract" [innerHTML]="abstractHtmlContent"></div>
+            <div class="body" [innerHTML]="bodyHtmlContent"></div>
+
+            <div class="text-muted mt-3">
+              <small>{{ article.username }}</small
+              ><br />
+              <small>{{ article.update_date }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </ng-template>
